@@ -1,0 +1,47 @@
+<script>
+  $(document).ready(function()
+  {
+    $("#n2").css("background-color","white");
+    $("#n2").css("border-top","4px solid #441d8d");
+    $("#n2").css("border-top-right-radius","10px");
+    $("#n2").css("color","black");
+    $("title").text($("title").text() +" - Participantes");
+    $("tr:odd").css("background-color", "#D8D8D8");
+  })
+  
+</script>
+<h4>Coordernador: </h4>
+  <p><%= link_to "Prof. Dr. Osvaldo Chiavone Filho",@participante[0] %></p>
+<h4>Pesquisadores:</h4>
+<br/>
+
+<table cellspacing="0">
+  <tr>
+    <th><b>Nome</b></th>
+    <th><b>Email</b></th>
+    <th><b>Projeto</b></th>
+    <% if session[:permission] == 'admin' %>
+      <th></th>
+      <th>
+        <%= link_to image_tag("user_add.png", :size => "30x32", :title => "Add participante"), new_participante_path %>
+      </th>
+    <% end %>
+  </tr>
+
+  <% @participante.each do |p| %>
+  <% if p.nome == "Prof. Dr. Osvaldo Chiavone Filho" %>
+    <% next %>
+  <% end %>
+  <tr>
+      <td><%= link_to p.nome, p %></td>
+      <td><%= p.email %></td>
+      <td><%= p.projeto %></td>
+      <% if session[:permission] == 'admin' %>
+        <td><%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "edit"),edit_participante_path(p) %></td>
+        <td><%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "delete"), p, :confirm => 'Are you sure you want to delete '+p.nome+'?', :method => :delete %></td>
+      <% elsif Participante.find_by_login(session[:login_name]) == p %>
+        <td><%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "edit"),edit_participante_path(p) %></td>
+      <% end %>
+  </tr>
+  <% end %>
+</table>

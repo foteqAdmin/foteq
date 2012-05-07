@@ -1,0 +1,34 @@
+<% if @participante.errors.any? %>
+  <div id="error_explanation" >
+    <h5><%= pluralize(@participante.errors.count, "error") %>
+    prohibited this participante from being saved:</h5>
+    <ul>
+      <% @participante.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for(@participante) do |p|%>
+  Nome <br/>
+  <%= p.text_field :nome %><br/>
+  Login <br/>
+  <%= p.text_field :login, :size => 15 %><br/>
+  Password <br/>
+  <%= p.password_field :pass, :size => 15 %><br/>
+  Confirm password <br/>
+  <%= p.password_field :pass_confirmation, :size => 15 %><br/>
+  Foto (URL) <br/>
+  <%= p.text_field :foto_url, :size => 20 %><br/>
+  Descrição<br/>
+  <%= p.text_area :descricao %><br/>
+  Projeto<br/>
+  <%= p.text_field :projeto %><br/>
+  E-mail<br/>
+  <%= p.email_field :email, :size => 15 %><br/>
+  Lattes<br/>
+  <%= p.text_field :lattes %><br/><br/>
+  <%= p.hidden_field :permission, :value => "student" %><br/>
+  <%= p.submit :id => "participantesButton" %>
+<% end %>

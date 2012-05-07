@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FOTEQ</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta name="keywords" content="FOTEQ, foteq, UFRN, NUPEG, nupeg" />
+  <meta name="description" content="Láboratório de Fotoquímica e Equilíbrio de Fases - FOTEQ. Todos os participantes, pesquisas, publicações e projetos do FOTEQ se encontram nesse website. Entre em contato conosco a vontade." />
+  <meta name="revised" content="Ruben O Chiavone, 4/2012" />
+  <%= favicon_link_tag %>
+  <%= stylesheet_link_tag    "application","participantes", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="main">
+	<div id="header">
+		<a href="/"><%= image_tag "FOTEQ2.png"%></a>
+	</div>
+
+	<div class="clear"></div>
+
+	<div id="menu">
+		<ul>
+			<a href="/"><li id="n1">Home</li></a>
+			<a href="/participantes"><li id="n2">Participantes</li></a>
+			<a href="/pesquisa"><li id="n3">Pesquisa</li></a>
+			<a href="/publicacoes"><li id="n4">Publicações</li></a>
+			<a href="/home/contato"><li id="n5">Contato</li></a>
+		</ul>
+
+		<span id="login">login <%= image_tag "setinhabranca.png" %></span>
+
+		<div id="div_login">
+			<% if session[:login] == true %>
+			  <p style="margin-right:100px;"><%= link_to Participante.find_by_login(session[:login_name]).nome, Participante.find_by_login(session[:login_name]) %></p>
+			  <form action="/application/logout" method="post">
+			    <input type="submit" value="logout">
+			  </form>
+			<% else %>
+                          <%= form_tag('/application/login',:method => :post) do %>
+			    <span style="margin-right:100px;">Login:</span><br/>
+                            <%= text_field_tag :name, params[:name], :required => "required", :size => 15 %><br/>
+			    Senha:<br/>
+                            <%= password_field_tag :pass, params[:pass], :required => "required", :size => 15 %><br/><br/>
+			    <%= submit_tag "Sign in" %>
+			  <% end %>
+			<% end %>
+		</div>
+	</div>
+
+	<div class="clear"></div>
+
+	<div id="content">
+
+		<% flash.each do |key, value|%>
+		  <div id="<%= key %>">
+		    <% case key %>
+		      <% when :success %>
+		        <%= image_tag 'success.png', :size => "36x36" %>
+		      <% when :notice %>
+		        <%= image_tag 'notice.png', :size => "36x36" %>
+		      <% when :error %>
+		        <%= image_tag 'error.png', :size => "36x36" %>
+		    <% end %>
+		    <%= value %>
+		  </div>
+		<% end %>
+
+
+		<div id="content_child">
+		  <%= yield %>
+		</div>
+	</div>
+
+	
+
+
+	<div class="clear"></div>
+</div>
+
+<div id="footer">
+
+	<dfn>FOTEQ - Laboratório de fotoquímica e equilíbrio de fases</dfn><br/>
+	<dfn>Campus Universitário UFRN - Núcleo Tecnológico NT/PPGEQ/NUPEG - Departamento de Engenharia Química</dfn><br/>
+	<dfn>Lagoa Nova CEP 59066-800 - Natal/RN - Fone: (+55 84) 3215 3773/Fax: (+55 84) 3215 3770</dfn><br/><br/>
+
+	<dfn>Parceiros:</dfn>
+	<div id="parceiros">
+		
+		<a href="http://www.sistemas.ufrn.br/portalufrn/PT/" target="_blank"><%= image_tag "ufrn.png", :alt => "ufrn logo", :title => "UFRN" %></a>
+		<a href="http://www.nupeg.ufrn.br/" target="_blank"><%= image_tag "nupeg.png", :alt => "NUPEG logo", :title => "NUPEG" %></a>
+		<a href="http://www.cnpq.br/" target="_blank"><%= image_tag "cnpq.png", :alt => "cnpq logo", :title => "CNPq" %></a>
+		<a href="http://www.capes.gov.br/" target="_blank"><%= image_tag "capes.png", :alt => "capes logo", :title => "CAPES" %></a>
+		<a href="http://www.anp.gov.br/?id=596" target="_blank"><%= image_tag "prh.png", :alt => "prh logo", :title => "prh anp" %></a>
+		<br/>
+		<a href="http://www.anp.gov.br/" target="_blank"><%= image_tag "anp.png", :alt => "anp logo", :title => "anp" %></a>
+		<a href="http://www.petrobras.com.br/pt/" target="_blank"><%= image_tag "petrobras.png", :alt => "Petrobras logo", :title => "Petrobras" %></a>
+		<a href="http://www.cnpq.br/programas/inct/_apresentacao/" target="_blank"><%= image_tag "inct.png", :alt => "inct logo", :title => "inct"%></a>
+		<a href="http://www.cepema.usp.br/" target="_blank"><%= image_tag "cepema.png", :alt => "cepema logo", :title => "cepema" %></a>
+	</div>
+	
+	<div class="clear"></div>
+	<br/><br/>
+
+	<div id="footer_child">
+		<div><a href="/home/contato">Contato</a></div>
+		<div><a href="/publicacoes">Publicações</a></div>
+		<div><a href="/pesquisa">Pesquisa</a></div>
+		<div><a href="/participantes">Participantes</a></div>
+		<div><a href="/">Home</a></div>
+	</div>
+
+	
+</div>
+
+</body>
+</html>

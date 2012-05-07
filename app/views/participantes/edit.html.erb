@@ -1,0 +1,20 @@
+<script>
+  $(document).ready(function()
+  {
+    $("#n2").css("background-color","white");
+    $("#n2").css("border-top","4px solid #441d8d");
+    $("#n2").css("border-top-right-radius","10px");
+    $("#n2").css("color","black");
+    $("title").text($("title").text() +" - Participantes - Edit");
+    $("tr:odd").css("background-color", "#D8D8D8");
+    $("#participantesButton").click(function()
+    {
+    });
+  })
+  
+</script>
+<h4>Editar participante</h4>
+
+<%= render 'form' %>
+
+<div style="text-align:center"><%= link_to "voltar",url_for(:back) %></div>

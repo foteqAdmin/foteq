@@ -1,0 +1,36 @@
+<script>
+  $(document).ready(function()
+  {
+    $("#n1").css("background-color","white");
+    $("#n1").css("border-top","4px solid #441d8d");
+    $("#n1").css("border-top-right-radius","10px");
+    $("#n1").css("color","black");
+    $("title").text($("title").text() +" - Home");
+    $("#changeText").click(function()
+    {
+      if (document.getElementById("changeText").innerHTML == '<span style="cursor:pointer">English version</span>')
+      { 
+        document.getElementById("p1").innerHTML = "Foteq lab. is inserted in the Chemical Engng. Dept. of the Federal University of Rio Grande do Norte. The lab aims to determine experimental data to give support for chemical process design demands. Both photochemical and phase equilibrium engineering are applied for research subjects involving residue treatment and fluid phase behavior in the processing conditions of interest.";
+        document.getElementById("p2").innerHTML = "Two types of photo reactors are being applied, i.e., using solar and lamp radiations:";
+        document.getElementById("p3").innerHTML = "Two methods of phase equilibrium are being used, i.e., synthetic and analytical, both at low and high pressures:";
+        document.getElementById("changeText").innerHTML = "<span style='cursor:pointer'>Versão em português</span>";
+      }
+      else
+      {
+        document.getElementById("p1").innerHTML = "O laboratório Foteq está inserido no Departamento de Engenharia Química da Universidade Federal do Rio Grande do Norte e tem como objetivo determinar experimentalmente dados para dar suporte às demandas de processos químicos. A fotoquímica e a engenharia de equilíbrio de fases são aplicadas para as pesquisa que envolvem o tratamento de resíduos e o comportamento da fase fluida nas condições de processamento de interesse.";
+        document.getElementById("p2").innerHTML = "Dois tipos de fotoreatores estão sendo aplicados e utilizam as radiações solares e da lâmpada:";
+        document.getElementById("p3").innerHTML = "Dois métodos de equilíbrio de fases estão sendo utilizados, o sintético e o analítico, tanto em baixas quanto em altas pressões:";
+        document.getElementById("changeText").innerHTML = "<span style='cursor:pointer'>English version</span>";
+      }
+    });
+  })
+</script>
+<p id="p1">O laboratório Foteq está inserido no Departamento de Engenharia Química da Universidade Federal do Rio Grande do Norte e tem como objetivo determinar experimentalmente dados para dar suporte às demandas de processos químicos. A fotoquímica e a engenharia de equilíbrio de fases são aplicadas para as pesquisa que envolvem o tratamento de resíduos e o comportamento da fase fluida nas condições de processamento de interesse.</p>
+
+<p id="p2">Dois tipos de fotoreatores estão sendo aplicados e utilizam as radiações solares e da lâmpada:</p>
+<p><%= image_tag("Aparelho nupeg.JPG") %></p>
+<p id="p3">Dois métodos de equilíbrio de fases estão sendo utilizados, o sintético e o analítico, tanto em baixas quanto em altas pressões:</p>
+<p><%= image_tag("Aparelho nupeg 2.JPG") %></p>
+
+<a id="changeText"><span style="cursor:pointer">English version</span></a>
+

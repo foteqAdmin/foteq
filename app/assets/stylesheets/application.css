@@ -1,0 +1,187 @@
+body
+{
+	margin:0;
+	padding:0;
+	background-color:white;
+}
+.clear
+{
+	clear:both;
+}
+a img
+{
+	border:0 solid white;
+}
+#main
+{
+	width:960px;
+	margin-left:auto;
+	margin-right:auto;
+}
+#header img
+{
+	float:right;
+}
+#menu
+{
+	background-color:#441d8d;
+	height:34px;
+}
+#menu ul
+{
+	list-style: none;
+	display: block;
+	margin:0;
+	padding-left:10px
+}  
+      
+#menu ul li 
+{  
+	float: left;
+	padding:7px;
+	margin-right:5px;
+	width:100px; 
+	font:bold 1em Arial;
+	text-align:center;
+	color:white;
+}
+#menu ul li a
+{
+	color:white;
+	text-decoration:none;
+}
+#menu ul a li:hover
+{
+	color:pink;
+	text-decoration:none;
+}
+#menu ul li:hover
+{
+	color:pink;
+	text-decoration:none;
+}
+#login
+{
+	cursor:pointer;
+	float:right;
+	font:bold 1em Arial;
+	text-align:center;
+	color:white;
+	padding:7px;
+	margin-right:20px;
+}
+#login img
+{
+	float:right;
+	margin-left:10px;
+	padding-top:3px;
+}
+#div_login
+{
+	position:relative;
+	z-index:20;
+	background-color:white;
+	top:34px;
+	left:700px;
+	width:238px;
+	padding:10px;
+	border-left:1px solid #441d8d;
+	border-right:1px solid #441d8d;
+	border-bottom:1px solid #441d8d;
+}
+#div_login a
+{
+	color:blue;
+	text-decoration:none;
+}
+#div_login a:hover
+{
+	text-decoration:underline;
+}
+#content
+{
+	background-color:white;
+}
+#content_child
+{
+	border-bottom:3px solid #441d8d;
+	margin-top:10px;
+	padding:10px;
+}
+#content_child a
+{
+	text-decoration:none;
+	color:blue;
+}
+#content_child a:hover
+{
+	text-decoration:underline;
+}
+#footer
+{
+	padding-top:20px;
+	width:1007px;
+	background-color:#F5F5F5;
+	border-top:1px solid #EBEBEB;
+	font:bold 1em Arial;
+	text-align:center;
+	font-size:9pt;
+	height:280px;
+}
+#footer dfn
+{
+	opacity:0.5;
+}
+#footer dfn:hover
+{
+	opacity:1;
+}
+#footer_child div
+{
+	float:right;
+	width:100px;
+	text-align:center;
+}
+#footer_child div a
+{
+	color:black;
+	opacity:0.5;
+	text-decoration:none;
+}
+#footer_child div a:hover
+{
+	opacity:1;
+	text-decoration:underline;
+}
+#parceiros
+{
+	margin-top:20px;
+}
+#parceiros img
+{
+	margin-right:40px;
+}
+#success
+{
+	margin:10px;
+	border:2px solid #3a9805;
+	background-color:#bbd594;
+	color:#3a9805;
+	padding:10px;
+}
+#notice
+{
+	margin:10px;
+	border:2px solid #ffe439;
+	background-color:#fff3a5;
+	color:#ffe439;
+	padding:10px;
+}
+#error
+{
+	margin:10px;
+	border:2px solid #b20d0d;
+	background-color:#d88b8b;
+	color:#b20d0d;
+	padding:10px;
+}
