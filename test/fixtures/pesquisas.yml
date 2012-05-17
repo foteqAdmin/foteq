@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  nome: MyString
+  descricao: MyText
+  participantes: MyText
+  financiadores: MyText
+
+two:
+  nome: MyString
+  descricao: MyText
+  participantes: MyText
+  financiadores: MyText

@@ -60,6 +60,9 @@ class ParticipantesController < ApplicationController
     if @participante.destroy
       flash[:success] = 'Participante '+@participante.nome+' was succesfully deleted'
       redirect_to participantes_path
+    else
+      flash[:error] = 'Algum erro ocorreu quando '+@participante.nome+' foi ser removido.'
+
     end
   end
 

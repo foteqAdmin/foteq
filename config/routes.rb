@@ -1,5 +1,5 @@
 Foteq::Application.routes.draw do
-  resources :participantes, :home, :publicacoes
+  resources :participantes, :home, :publicacoes, :pesquisas
 
   post "/application/login"
 

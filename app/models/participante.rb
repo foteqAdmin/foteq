@@ -1,9 +1,9 @@
 require 'digest/sha2'
 
 class Participante < ActiveRecord::Base
-  validates :nome, :presence => true, :uniqueness => true
-  validates :login, :presence => true, :uniqueness => true
-  validates :email, :presence => true, :uniqueness => true
+  validates :nome, :presence => true, :uniqueness => true, :length => {:minimum => 6}
+  validates :login, :presence => true, :uniqueness => true, :length => {:minimum => 6}
+  validates :email, :presence => true, :uniqueness => true, :format => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i}
   validates :projeto, :presence => true
   
   validates :pass, :confirmation => true
