@@ -1,0 +1,52 @@
+<script>
+  $(document).ready(function()
+  {
+    $("#n3").css("background-color","white");
+    $("#n3").css("border-top","4px solid #441d8d");
+    $("#n3").css("border-top-right-radius","10px");
+    $("#n3").css("color","black");
+    $("title").text($("title").text() +" - Pesquisas");
+  })
+</script>
+<table cellspacing="0">
+
+
+  <tr>
+      <td>
+        <h4><%= @pesquisa.nome %></h4>
+        <strong>Descrição: </strong><%= @pesquisa.descricao %><br/>
+
+        <% i = 0%>
+        <% @pesquisa.participantes.each do i=i+1%>
+        <% end %>
+
+        <% if i == 0 %>
+          <% i = 2 %>
+        <% end %>
+
+        <% parts = Array.new%>
+        <% for j in 1..i/2%>
+          <% parts[j-1] = @pesquisa.participantes['nome'+j.to_s]+' - '+@pesquisa.participantes['tipo'+j.to_s]%>
+        <% end %>
+        <strong>Participantes: </strong><%= parts.join(" / ")+"." %><br/>
+
+        <% k = 0%>
+        <% @pesquisa.financiadores.each do k=k+1%>
+        <% end %>
+
+        <% if k == 0 %>
+          <% k = 2 %>
+        <% end %>
+
+        <% finan = Array.new%>
+        <% for l in 1..k/2%>
+          <% finan[l-1] = @pesquisa.financiadores['nome'+l.to_s]+' - '+@pesquisa.financiadores['tipo'+l.to_s]%>
+        <% end %>
+        <strong>Financiadores: </strong><%= finan.join(" / ")+"." %><br/>
+        <% if session[:permission] == 'admin' %>
+          <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),edit_pesquisa_path(p) %>
+          <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), p, :confirm => 'Are you sure you want to delete '+@pesquisa.nome+'?', :method => :delete %>
+        <% end %>
+      </td>
+  </tr>
+</table>

@@ -1,0 +1,15 @@
+<script>
+  $(document).ready(function()
+  {
+    $("#n3").css("background-color","white");
+    $("#n3").css("border-top","4px solid #441d8d");
+    $("#n3").css("border-top-right-radius","10px");
+    $("#n3").css("color","black");
+    $("title").text($("title").text() +" - Pesquisas - Nova");
+  })
+  
+</script>
+<h4>Criar pesquisa</h4>
+<%= render 'form' %>
+
+<div style="text-align:center"><%= link_to "voltar",url_for(:back) %></div>

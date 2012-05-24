@@ -23,7 +23,7 @@
     <% if session[:permission] == 'admin' %>
       <th></th>
       <th>
-        <%= link_to image_tag("user_add.png", :size => "30x32", :title => "Add participante"), new_participante_path %>
+        <%= link_to image_tag("user_add.png", :size => "30x32", :title => "Adicionar participante"), new_participante_path %>
       </th>
     <% end %>
   </tr>
@@ -37,8 +37,8 @@
       <td><%= p.email %></td>
       <td><%= p.projeto %></td>
       <% if session[:permission] == 'admin' %>
-        <td><%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "edit"),edit_participante_path(p) %></td>
-        <td><%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "delete"), p, :confirm => 'Are you sure you want to delete '+p.nome+'?', :method => :delete %></td>
+        <td><%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),edit_participante_path(p) %></td>
+        <td><%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), p, :confirm => 'Are you sure you want to delete '+p.nome+'?', :method => :delete %></td>
       <% elsif Participante.find_by_login(session[:login_name]) == p %>
         <td><%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "edit"),edit_participante_path(p) %></td>
       <% end %>

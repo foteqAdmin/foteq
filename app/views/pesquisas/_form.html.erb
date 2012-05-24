@@ -1,0 +1,125 @@
+<script type="text/javascript">
+	function addRowToParticipantes()
+	{
+		parts++;
+
+		var row = $("#table1 tr:last-child").clone();
+		row.children()[0].firstChild.setAttribute("name","pesquisa[participantes[nome"+parts+"]]");
+		row.children()[0].firstChild.value = "";
+		row.children()[1].childNodes[1].setAttribute("name","pesquisa[participantes[tipo"+parts+"]]");
+		row.appendTo("#table1");
+	}
+
+	function addRowToFinanciadores()
+	{
+		finan++;
+
+		var row = $("#table2 tr:last-child").clone();
+		row.children()[0].firstChild.setAttribute("name","pesquisa[financiadores[nome"+finan+"]]");
+		row.children()[0].firstChild.value = "";
+		row.children()[1].childNodes[1].setAttribute("name","pesquisa[financiadores[tipo"+finan+"]]");
+		row.appendTo("#table2")
+	}
+
+	var parts;
+	var finan;
+
+	$(document).ready(function()
+	{
+		var textParticipantes = $("#table1 tr:last-child").clone().children()[0].firstChild.getAttribute("name");
+		var textFinanciadores = $("#table2 tr:last-child").clone().children()[0].firstChild.getAttribute("name");
+		parts = parseInt(textParticipantes[27]);
+		finan = parseInt(textFinanciadores[27]);
+	});
+</script>
+<% if @pesquisa.errors.any? %>
+  <div id="error_explanation" >
+    <h5><%= pluralize(@pesquisa.errors.count, "error") %>
+    prohibited this participante from being saved:</h5>
+    <ul>
+      <% @pesquisa.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for(@pesquisa) do |p|%>
+  Nome <br/>
+  <%= p.text_field :nome %><br/>
+  Descrição<br/>
+  <%= p.text_area :descricao, :cols => 80, :rows => 15 %><br/>
+  Participantes<br/>
+  <%= p.fields_for :participantes do |part| %>
+    <table id="table1">
+      <tr>
+        <th>Nome
+        </th>
+        <th>Tipo
+        </th>
+
+        <td><%= image_tag "plus.png", :size => '18x18', :style => 'cursor:pointer;', :title => 'Add participante', :onClick => 'addRowToParticipantes();' %>
+        </td>      
+      </tr>
+
+      <% i = 0%>
+      <% @pesquisa.participantes.each do i=i+1%>
+      <% end %>
+
+      <% if i == 0 %>
+        <% i = 2 %>
+      <% end %>
+
+      <% for j in 1..i/2%>
+
+        <tr>
+          <td><input name="pesquisa[participantes[nome<%= j.to_s %>]]" value="<%= @pesquisa.participantes['nome'+j.to_s] %>" size="20" type="text" />
+          </td>
+          <td>
+            <select name="pesquisa[participantes[tipo<%= j.to_s %>]]" value="<%= @pesquisa.participantes['tipo'+j.to_s] %>">
+              <%= options_for_select([['Integrante','Integrante'],['Coordenador','Coordenador']],@pesquisa.participantes['tipo'+j.to_s]) %>
+            </select>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+  Financiadores<br/>
+  <%= p.fields_for :financiadores do |f|%>
+    <table id="table2">
+      <tr>
+        <th>Nome
+        </th>
+        <th>Tipo
+        </th>
+
+        <td><%= image_tag "plus.png", :size => '18x18', :style => 'cursor:pointer;', :title => 'Add participante', :onClick => 'addRowToFinanciadores();' %>
+        </td>      
+      </tr>
+
+      <% k = 0%>
+      <% @pesquisa.financiadores.each do k=k+1%>
+      <% end %>
+
+      <% if k == 0 %>
+        <% k = 2 %>
+      <% end %>
+
+      <% for l in 1..k/2%>
+
+        <tr>
+          <td><input name="pesquisa[financiadores[nome<%= l.to_s %>]]" value="<%= @pesquisa.financiadores['nome'+l.to_s] %>" size="20" type="text" />
+          </td>
+          <td>
+            <select name="pesquisa[financiadores[tipo<%= l.to_s %>]]" value="<%= @pesquisa.financiadores['tipo'+l.to_s] %>">
+              <%= options_for_select([['Auxílio Financeiro','Auxílio Financeiro'],['Bolsa','Bolsa']], @pesquisa.financiadores['tipo'+l.to_s]) %>
+            </select>
+          </td>
+        </tr>
+      <% end %>
+
+    </table>
+  <% end %>
+
+  <%= p.submit %>
+<% end %>

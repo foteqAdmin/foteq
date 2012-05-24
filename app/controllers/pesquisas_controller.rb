@@ -1,6 +1,7 @@
 class PesquisasController < ApplicationController
   def index
     @pesquisa = Pesquisa.all
+    @pesquisa = @pesquisa.reverse
   end
 
   def show
@@ -26,7 +27,7 @@ class PesquisasController < ApplicationController
   def create
     @pesquisa = Pesquisa.new(params[:pesquisa])
 
-    if @participante.save
+    if @pesquisa.save
       flash[:success] = 'Pesquisa '+@pesquisa.nome+' foi criada com sucesso.'
       redirect_to @pesquisa
     else
