@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <div style="float:right;">
+      <%= image_tag "FOTEQ2.png" %>
+    </div>
+    <h4>Bem-vindo(a) <%= @participante.nome %>!</h4>
+    <p>
+      Seu cadastro no website do FOTEQ foi realizado com sucesso,
+      e seu login é: <%= @participante.login %>.<br/>
+    </p>
+    <p>
+      Para se conectar basta ir no link: <%= @url %> e clicar na aba "login".
+    </p>
+    <p>Obrigado e tenha um bom dia!</p>
+  </body>
+</html>

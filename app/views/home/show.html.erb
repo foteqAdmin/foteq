@@ -6,6 +6,226 @@
     $("#n5").css("border-top-right-radius","10px");
     $("#n5").css("color","black");
     $("title").text($("title").text() +" - Contato");
+    var hasError1 = true;
+    var hasError2 = true;
+    var hasError3 = true;
+    var hasError4 = true;
+            $("#submit_button").click(function()
+            {            
+                if (hasError1 == true)  
+                {
+                    return false;
+                }
+                else if (hasError2 == true)
+                {
+                    return false;
+                }
+                else if (hasError3 == true)
+                {
+                    return false;
+                }
+                else if (hasError4 == true)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            })
+ 
+            var flagName = 0;//-1 = error + error msg, 0 = error + should get error msg and 1 = validated no error msg
+            $("#name").change(function()
+            {
+                var nameInput = $("#name").val();    
+                
+                if (nameInput == '')
+                {
+                    if (flagName != -1)
+                        flagName = 0;        
+                }
+                else
+                {
+                    if (flagName == -1)
+                    {
+                        $("#name").css("border","");
+                        $("#name").next().remove();
+                        $("#name").after('<br>');
+                    }
+                    hasError1 = false;
+                    flagName = 1;
+                }
+ 
+                if (flagName == 0)
+                {  
+                    $("#name").css("border","1px solid red");
+                    $("#name").after('<ul class="errorName" style="margin:0;"><li style="color:red;list-style:square;padding-top:3px;">Por favor, escreva seu nome.</li></ul>');
+                    $(".errorName").next().remove();
+                    flagName = -1;
+                    hasError1 = true;
+                }
+            })
+ 
+            var flagEmail = 0;//-1 = error + error msg, 0 = error + should get error msg and 1 = validated no error msg
+            var counter = 0;
+            $("#email").change(function()
+            {
+                var emailAddress = $("#email").val();
+                var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+ 
+ 
+                if (emailAddress == '')  
+                {
+                    flagEmail = 0;
+                    errorFlagMsg = 1;
+                }  
+                else if (!emailReg.test(emailAddress))  
+                {
+                    flagEmail = 0;
+                    errorFlagMsg = 2;
+                }
+                else
+                {
+                    if (flagEmail == -1)
+                    {
+                        $("#email").css("border","");
+                        $("#email").next().remove();
+                        $("#email").after('<br>');
+                        counter = 0;
+                    }
+                    hasError2 = false;
+                    flagEmail = 1;
+                }
+                
+                if (flagEmail == 0)
+                {
+                    counter += 1;
+ 
+                    if (counter == 1)
+                    {
+                        $("#email").next().remove();                    }
+                    else
+                    {
+                        $(".errorEmail").remove();
+                    }
+ 
+                    if (errorFlagMsg == 1)
+                    {
+                        $("#email").css("border","1px solid red");
+                        $("#email").after('<ul class="errorEmail" style="margin:0;"><li style="color:red;list-style:square;padding-top:3px;">Por favor, escreva seu email.</li></ul>');
+                    }
+                    else
+                    {
+                        $("#email").css("border","1px solid red");
+                        $("#email").after('<ul class="errorEmail" style="margin:0;"><li style="color:red;list-style:square;padding-top:3px;">Email inváldo.</li></ul>');
+                    }
+ 
+                    flagEmail = -1;
+                    hasError2 = true;
+                }
+            })
+ 
+            var flagSubject = 0;//-1 = error + error msg, 0 = error + should get error msg and 1 = validated no error msg
+            $("#subject").change(function()
+            {    
+                var subjectInput = $("#subject").val();
+ 
+                if (subjectInput == '')
+                {
+                    if (flagSubject != -1)
+                        flagSubject = 0;        
+                }
+                else
+                {
+                    if (flagSubject == -1)
+                    {
+                        $("#subject").css("border","");
+                        $("#subject").next().remove();
+                        $("#subject").after('<br>');
+                    }
+                    hasError3 = false;
+                    flagSubject = 1;
+                }
+ 
+                if (flagSubject == 0)
+                {  
+                    $("#subject").css("border","1px solid red");
+                    $("#subject").after('<ul class="errorSubject" style="margin:0;"><li style="color:red;list-style:square;padding-top:3px;">Por favor, escreva um assunto.</li></ul>');
+                    $(".errorSubject").next().remove();
+                    flagSubject = -1;
+                    hasError3 = true;
+                }
+            })
+ 
+            var flagText = 0;//-1 = error + error msg, 0 = error + should get error msg and 1 = validated no error msg
+            var counter1 = 0;
+            $("#msg").change(function()
+            {
+                var msgTextarea = $("#msg").val();
+                
+                if (msgTextarea == '')
+                {
+                    flagText = 0;
+                    errorFlagMsg = 1;
+                }  
+                else if (msgTextarea.length < 20)
+                {
+                    flagText = 0;
+                    errorFlagMsg = 2;
+                }
+                else
+                {
+                    if (flagText == -1)
+                    {
+                        $("#msg").css("border","");
+                        $("#msg").next().remove();
+                        $("#msg").after('<br>');
+                        counter1 = 0;
+                    }
+                    hasError4 = false;
+                    flagText = 1;
+                }
+                
+                if (flagText == 0)
+                {
+                    counter1 += 1;
+ 
+                    if (counter1 == 1)
+                    {
+                        $("#msg").next().remove();                    }
+                    else
+                    {
+                        $(".errorText").remove();
+                    }
+ 
+                    if (errorFlagMsg == 1)
+                    {
+                        $("#msg").css("border","1px solid red");
+                        $("#msg").after('<ul class="errorText" style="margin:0;"><li style="color:red;list-style:square;padding-top:3px;">Por favor, escreva algum texto para ser enviado.</li></ul>');
+                    }
+                    else
+                    {
+                        $("#msg").css("border","1px solid red");
+                        $("#msg").after('<ul class="errorText" style="margin:0;"><li style="color:red;list-style:square;padding-top:3px;">Escreva no mínimo 20 caracteres.</li></ul>');
+                    }
+ 
+                    flagText = -1;
+                    hasError4 = true;
+                }
+            })
+
   })
 </script>
+
+<%= form_for :contact, :name => "contato" do |f| %>
+  Nome:<br/>
+  <%= f.text_field :name, :id => "name",:size => 20 %><br/>
+  E-mail:<br/>
+  <%= f.text_field :from, :id => "email", :size => 20 %><br/>
+  Assunto:<br/>
+  <%= f.text_field :subject, :id => "subject", :size => 20 %><br/>
+  Mensagem:<br/>
+  <%= f.text_area :message, :id => "msg" %><br/>
+  <%= f.submit 'Enviar', :id => "submit_button" %>
+<% end %> 
 

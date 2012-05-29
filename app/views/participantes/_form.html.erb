@@ -23,12 +23,17 @@
   <%= p.text_field :foto_url, :size => 20 %><br/>
   Descrição<br/>
   <%= p.text_area :descricao %><br/>
-  Projeto<br/>
+  Projeto de Pesquisa<br/>
   <%= p.text_field :projeto %><br/>
   E-mail<br/>
   <%= p.email_field :email, :size => 15 %><br/>
   Lattes<br/>
-  <%= p.text_field :lattes %><br/><br/>
-  <%= p.hidden_field :permission, :value => "student" %><br/>
+  <%= p.text_field :lattes %><br/>
+  <% if session[:permission] == 'admin' %>
+    Permissão<br/>
+    <%= p.select(:permission, options_for_select([['Administrador','admin'],['Aluno','student']], @participante.permission)) %><br/><br/>
+  <% else %>
+    <%= p.hidden_field :permission, :value => "student" %><br/>
+  <% end %>
   <%= p.submit :id => "participantesButton" %>
 <% end %>

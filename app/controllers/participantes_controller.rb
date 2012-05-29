@@ -12,11 +12,7 @@ class ParticipantesController < ApplicationController
   end
 
   def new
-    if session[:permission] == 'admin'
-      @participante = Participante.new
-    else
-      render 'public/404.html'
-    end
+    @participante = Participante.new
   end
 
   def edit
@@ -37,6 +33,7 @@ class ParticipantesController < ApplicationController
     @participante = Participante.new(params[:participante])
 
     if @participante.save
+      FoteqMailer.welcome(@participante).deliver
       flash[:success] = 'Participante '+@participante.nome+' was successfully created'
       redirect_to @participante
     else
