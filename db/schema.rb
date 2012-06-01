@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120517113825) do
+ActiveRecord::Schema.define(:version => 20120531142945) do
 
   create_table "participantes", :force => true do |t|
     t.string   "nome"
@@ -35,6 +35,20 @@ ActiveRecord::Schema.define(:version => 20120517113825) do
     t.text     "financiadores"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "publicacaos", :force => true do |t|
+    t.text     "participantes"
+    t.text     "titulo"
+    t.integer  "ano"
+    t.string   "suporte"
+    t.integer  "volume"
+    t.integer  "pag_ini"
+    t.integer  "pag_final"
+    t.string   "arquivo"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "tipo"
   end
 
 end

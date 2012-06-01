@@ -53,6 +53,7 @@ class PesquisasController < ApplicationController
       redirect_to pesquisas_path
     else
       flash[:error] = 'Algum erro ocorreu quando '+@pesquisa.nome+' foi ser removida.'
+      redirect_to :back
     end
   end
 

@@ -23,6 +23,7 @@
 
 	var parts;
 	var finan;
+	var oneHasNotBeenDeleted = true;
 
 	$(document).ready(function()
 	{
@@ -30,12 +31,96 @@
 		var textFinanciadores = $("#table2 tr:last-child").clone().children()[0].firstChild.getAttribute("name");
 		parts = parseInt(textParticipantes[27]);
 		finan = parseInt(textFinanciadores[27]);
+
+		$("form#new_pesquisa").on('mouseover', 'td#delete', function()
+		{
+			var table = this.parentNode.parentNode.parentNode.getAttribute("id");
+
+			if (table == "table1" && parts == 1)
+				return;
+			if (table == "table2" && finan == 1)
+				return;
+
+			this.childNodes[1].style.visibility = 'visible';
+		});
+		$("form#new_pesquisa").on('mouseout', 'td#delete', function()
+		{
+			var table = this.parentNode.parentNode.parentNode.getAttribute("id");
+
+			if (table == "table1" && parts == 1)
+				return;
+			if (table == "table2" && finan == 1)
+				return;
+
+			if (this.childNodes[1].style.visibility == 'visible')
+				this.childNodes[1].style.visibility = 'hidden';
+		});
+		$("form#new_pesquisa").on('click', 'td#delete', function()
+		{
+			if (this.childNodes[1].style.visibility == 'hidden')
+				return;
+			else
+			{
+				var table = this.parentNode.parentNode.parentNode.getAttribute("id");
+
+				var elemNumber = parseInt(this.parentNode.childNodes[1].childNodes[0].getAttribute("name")[27]);
+
+				var rowNumber;
+
+				if (table == "table1")
+				{
+					if (elemNumber < parts)
+					{
+						for (var i = 1;i<=parts;i++)
+						{
+							if (i > elemNumber)
+							{
+								rowNumber = i + 2;
+									this.parentNode.parentNode.childNodes[rowNumber].childNodes[1].childNodes[0].setAttribute("name","pesquisa[participantes[nome"+(i-1)+"]]");
+									this.parentNode.parentNode.childNodes[rowNumber].childNodes[3].childNodes[1].setAttribute("name","pesquisa[participantes[tipo"+(i-1)+"]]");
+							}							
+						}
+					}
+					parts--;
+				}
+
+
+				if (table == "table2")
+				{
+					if (elemNumber < finan)
+					{
+						for (var i = 1;i<=finan;i++)
+						{
+							if (i > elemNumber)
+							{
+								rowNumber = i + 2;
+									this.parentNode.parentNode.childNodes[rowNumber].childNodes[1].childNodes[0].setAttribute("name","pesquisa[financiadores[nome"+(i-1)+"]]");
+									this.parentNode.parentNode.childNodes[rowNumber].childNodes[3].childNodes[1].setAttribute("name","pesquisa[financiadores[tipo"+(i-1)+"]]");
+							}							
+						}
+					}
+					finan--;
+				}
+
+				var allNode = $(this).parent().parent().contents();
+
+				if (elemNumber == 1 && oneHasNotBeenDeleted)
+				{
+					$(allNode.get()[elemNumber + 1]).remove();
+					oneHasNotBeenDeleted = false;
+				}
+				else
+					$(allNode.get()[elemNumber + 2]).remove();
+				
+			}
+				
+		});
 	});
 </script>
 <% if @pesquisa.errors.any? %>
   <div id="error_explanation" >
     <h5><%= pluralize(@pesquisa.errors.count, "error") %>
-    prohibited this participante from being saved:</h5>
+    prohibited this pesquisa from being saved:</h5>
     <ul>
       <% @pesquisa.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -80,6 +165,9 @@
               <%= options_for_select([['Integrante','Integrante'],['Coordenador','Coordenador']],@pesquisa.participantes['tipo'+j.to_s]) %>
             </select>
           </td>
+          <td id="delete">
+            <img src='/assets/trash-icon.png' style="visibility:hidden;">
+          </td>
         </tr>
       <% end %>
     </table>
@@ -114,6 +202,9 @@
             <select name="pesquisa[financiadores[tipo<%= l.to_s %>]]" value="<%= @pesquisa.financiadores['tipo'+l.to_s] %>">
               <%= options_for_select([['Auxílio Financeiro','Auxílio Financeiro'],['Bolsa','Bolsa']], @pesquisa.financiadores['tipo'+l.to_s]) %>
             </select>
+          </td>
+          <td id="delete">
+            <img src='/assets/trash-icon.png' style="visibility:hidden;">
           </td>
         </tr>
       <% end %>

@@ -59,7 +59,7 @@ class ParticipantesController < ApplicationController
       redirect_to participantes_path
     else
       flash[:error] = 'Algum erro ocorreu quando '+@participante.nome+' foi ser removido.'
-
+      redirect_to :back
     end
   end
 

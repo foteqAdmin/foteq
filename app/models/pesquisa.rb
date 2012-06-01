@@ -4,4 +4,6 @@ class Pesquisa < ActiveRecord::Base
 
   validates :nome, :presence => true, :uniqueness => true, :length => {:minimum => 6}
   validates :descricao, :presence => true
+  validates :participantes, :presence => true
+  validates :financiadores, :presence => true
 end

@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  participantes: MyText
+  titulo: MyText
+  ano: 1
+  suporte: MyString
+  volume: 1
+  pag_ini: 1
+  pag_final: 1
+  arquivo: MyString
+
+two:
+  participantes: MyText
+  titulo: MyText
+  ano: 1
+  suporte: MyString
+  volume: 1
+  pag_ini: 1
+  pag_final: 1
+  arquivo: MyString

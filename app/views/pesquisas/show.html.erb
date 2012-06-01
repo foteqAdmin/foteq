@@ -26,9 +26,16 @@
 
         <% parts = Array.new%>
         <% for j in 1..i/2%>
-          <% parts[j-1] = @pesquisa.participantes['nome'+j.to_s]+' - '+@pesquisa.participantes['tipo'+j.to_s]%>
+
+          <% if Participante.find_by_nome(@pesquisa.participantes['nome'+j.to_s]).present? %>
+            <% temp =  link_to(Participante.find_by_nome(@pesquisa.participantes['nome'+j.to_s]).nome, Participante.find_by_nome(@pesquisa.participantes['nome'+j.to_s])) %>
+          <% else %>
+            <% temp = @pesquisa.participantes['nome'+j.to_s] %>
+          <% end %>
+
+          <% parts[j-1] = temp+' - '+@pesquisa.participantes['tipo'+j.to_s]%>
         <% end %>
-        <strong>Participantes: </strong><%= parts.join(" / ")+"." %><br/>
+        <strong>Participantes: </strong><%= raw parts.join(" / ")+"." %><br/>
 
         <% k = 0%>
         <% @pesquisa.financiadores.each do k=k+1%>
