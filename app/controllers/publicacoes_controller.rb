@@ -26,11 +26,16 @@ class PublicacoesController < ApplicationController
   end
 
   def create
-    @publicacao = Publicacao.new(params[:publicacao])
+    @hash = params[:publicacao]
+    if @hash['arquivo'].present?
+      @hash['arquivo'] = DataFile.saveFile(@hash['arquivo'])
+    end
+
+    @publicacao = Publicacao.new(@hash)
 
     if @publicacao.save
       flash[:success] = 'Publicacao '+@publicacao.titulo+' foi criada com sucesso.'
-      redirect_to @publicacao
+      redirect_to publicacoes_path
     else
       render 'new'
     end

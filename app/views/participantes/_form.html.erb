@@ -1,3 +1,30 @@
+<script type="text/javascript">
+	$(document).ready(function()
+	{
+		var maximum = 0;
+		$("label").each(function()
+		{
+			if ($(this).width() > maximum)
+				maximum = $(this).width();
+		});
+		$("label").width(maximum+100);
+		$("button").css("margin-left",(maximum+100)+'px');
+		$("label").css("display","block");
+
+		$("button").click(function()
+		{
+			$(this).parent().append("<input id='participante_foto_url' name='participante[foto_url]' type='file'>");
+			$(this).parent().children().each(function()
+			{
+				if ($(this).attr('type') == 'hidden')
+					$(this).remove();
+				if ($(this).attr('id') != 'participante_foto_url' && $(this).attr('for') != 'participante_foto_url')
+					$(this).remove();
+			});
+			return false;
+		});
+	})
+</script>
 <% if @participante.errors.any? %>
   <div id="error_explanation" >
     <h5><%= pluralize(@participante.errors.count, "error") %>
@@ -10,30 +37,56 @@
   </div>
 <% end %>
 
-<%= form_for(@participante) do |p|%>
-  Nome <br/>
+<%= form_for(@participante, :html => {:multipart => true}) do |p|%>
+  <%= p.label :nome, 'Nome *' %>
   <%= p.text_field :nome %><br/>
-  Login <br/>
-  <%= p.text_field :login, :size => 15 %><br/>
-  Password <br/>
-  <%= p.password_field :pass, :size => 15 %><br/>
-  Confirm password <br/>
-  <%= p.password_field :pass_confirmation, :size => 15 %><br/>
-  Foto (URL) <br/>
-  <%= p.text_field :foto_url, :size => 20 %><br/>
-  Descrição<br/>
-  <%= p.text_area :descricao %><br/>
-  Projeto de Pesquisa<br/>
-  <%= p.text_field :projeto %><br/>
-  E-mail<br/>
-  <%= p.email_field :email, :size => 15 %><br/>
-  Lattes<br/>
-  <%= p.text_field :lattes %><br/>
-  <% if session[:permission] == 'admin' %>
-    Permissão<br/>
-    <%= p.select(:permission, options_for_select([['Administrador','admin'],['Aluno','student']], @participante.permission)) %><br/><br/>
-  <% else %>
-    <%= p.hidden_field :permission, :value => "student" %><br/>
+
+  <% if !@participante.login.present? %>
+    <%= p.label :login, 'Login *' %>
+    <%= p.text_field :login, :size => 15 %><br/>
   <% end %>
+
+  <% if !@participante.password.present? %>
+    <%= p.label :pass, 'Password *' %>
+    <%= p.password_field :pass, :size => 15 %><br/>
+
+    <%= p.label :pass_confirmation, 'Confirmar Password *' %>
+    <%= p.password_field :pass_confirmation, :size => 15 %><br/>
+  <% end %>
+
+  <div>
+    <%= p.label :foto_url, 'Foto' %>
+    <% if @participante.foto_url.present? %>
+      <%= image_tag @participante.foto_url, :id => 'partImg', :width => 165, :height => 200 %><br/>
+      <button>Alterar</button><br/>
+      <%= p.hidden_field :foto_url %>
+    <% else %>
+      <%= p.file_field :foto_url %>
+    <% end %>
+  </div>
+  <br/>
+
+  <%= p.label :descricao, 'Resumo do Currículo' %>
+  <%= p.text_area :descricao, :cols => 70, :rows => 15 %><br/><br/>
+
+  <%= p.label :projeto, 'Projeto de Pesquisa *' %>
+  <%= p.text_field :projeto, :size => 50 %><br/>
+
+  <%= p.label :email, 'E-mail *' %>
+  <%= p.email_field :email, :size => 15 %><br/>
+
+  <%= p.label :lattes, 'Lattes' %>
+  <%= p.text_field :lattes %><br/>
+
+  <% if session[:permission] == 'admin' and @participante.login != 'adminFOTEQ' %>
+    <%= p.label :permission, 'Permissão' %>
+    <%= p.select(:permission, options_for_select([['Administrador','admin'],['Aluno','student']], @participante.permission)) %><br/><br/>
+  <% elsif @participante.login != 'adminFOTEQ' %>
+    <%= p.hidden_field :permission, :value => "student" %><br/>
+  <% else %>
+    <%= p.hidden_field :permission, :value => "admin" %><br/>
+  <% end %>
+  <br/>
   <%= p.submit :id => "participantesButton" %>
 <% end %>
+<br/>

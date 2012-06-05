@@ -23,10 +23,20 @@
 
 	var parts;
 	var finan;
-	var oneHasNotBeenDeleted = true;
+	var oneHasNotBeenDeletedParts = true;
+	var oneHasNotBeenDeletedFinan = true;
 
 	$(document).ready(function()
 	{
+		var maximum = 0;
+		$("label").each(function()
+		{
+			if ($(this).width() > maximum)
+				maximum = $(this).width();
+		});
+		$("label").width(maximum+100);
+		$("label").css("display","block");
+
 		var textParticipantes = $("#table1 tr:last-child").clone().children()[0].firstChild.getAttribute("name");
 		var textFinanciadores = $("#table2 tr:last-child").clone().children()[0].firstChild.getAttribute("name");
 		parts = parseInt(textParticipantes[27]);
@@ -67,6 +77,8 @@
 
 				var rowNumber;
 
+				var allNode = $(this).parent().parent().contents();
+
 				if (table == "table1")
 				{
 					if (elemNumber < parts)
@@ -82,6 +94,13 @@
 						}
 					}
 					parts--;
+					if (elemNumber == 1 && oneHasNotBeenDeletedParts)
+					{
+						$(allNode.get()[elemNumber + 1]).remove();
+						oneHasNotBeenDeletedParts = false;
+					}
+					else
+						$(allNode.get()[elemNumber + 2]).remove();
 				}
 
 
@@ -100,18 +119,15 @@
 						}
 					}
 					finan--;
+					if (elemNumber == 1 && oneHasNotBeenDeletedFinan)
+					{
+						$(allNode.get()[elemNumber + 1]).remove();
+						oneHasNotBeenDeletedFinan = false;
+					}
+					else
+						$(allNode.get()[elemNumber + 2]).remove();
 				}
 
-				var allNode = $(this).parent().parent().contents();
-
-				if (elemNumber == 1 && oneHasNotBeenDeleted)
-				{
-					$(allNode.get()[elemNumber + 1]).remove();
-					oneHasNotBeenDeleted = false;
-				}
-				else
-					$(allNode.get()[elemNumber + 2]).remove();
-				
 			}
 				
 		});
@@ -130,11 +146,14 @@
 <% end %>
 
 <%= form_for(@pesquisa) do |p|%>
-  Nome <br/>
+  <%= p.label :nome, 'Título *' %>
   <%= p.text_field :nome %><br/>
-  Descrição<br/>
+
+  <%= p.label :descricao, 'Descrição *' %>
   <%= p.text_area :descricao, :cols => 80, :rows => 15 %><br/>
-  Participantes<br/>
+  <br/>
+
+  <%= p.label :participantes, 'Participantes' %>
   <%= p.fields_for :participantes do |part| %>
     <table id="table1">
       <tr>
@@ -172,7 +191,9 @@
       <% end %>
     </table>
   <% end %>
-  Financiadores<br/>
+  <br/>
+
+  <%= p.label :financiadores, 'Financiadores' %>
   <%= p.fields_for :financiadores do |f|%>
     <table id="table2">
       <tr>
@@ -211,6 +232,8 @@
 
     </table>
   <% end %>
+  <br/>
 
   <%= p.submit %>
 <% end %>
+<br/>

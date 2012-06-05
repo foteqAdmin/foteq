@@ -39,9 +39,9 @@
 			<% else %>
                           <%= form_tag('/application/login',:method => :post) do %>
 			    <span style="margin-right:100px;">Login:</span><br/>
-                            <%= text_field_tag :name, params[:name], :required => "required", :size => 15 %><br/>
+                            <%= text_field_tag :name, params[:name], :required => "required", :size => 15 %>
 			    Senha:<br/>
-                            <%= password_field_tag :pass, params[:pass], :required => "required", :size => 15 %><br/>
+                            <%= password_field_tag :pass, params[:pass], :required => "required", :size => 15 %>
                             Aluno? <a href="/participantes/new">Cadastre-se aqui.</a><br/><br/>
 			    <%= submit_tag "Sign in" %>
 			  <% end %>

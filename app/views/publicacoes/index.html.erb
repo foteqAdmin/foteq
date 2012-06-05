@@ -19,7 +19,7 @@
   <% end %>
 
   <tr>
-    <th>
+    <th colspan=2>
       Periódicos
     </th>
   </tr>
@@ -28,12 +28,19 @@
     <% if p.tipo == 'periodicos' %>
       <tr>
           <td>
-            <h4><%= link_to p.titulo, p %></h4>
+            <h4><%= link_to p.titulo, '/publicacoes/'+p.id.to_s %></h4>
             <% if session[:permission] == 'admin' %>
-              <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),edit_publicacoe_path(p) %>
-              <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), p, :confirm => 'Are you sure you want to delete '+p.titulo+'?', :method => :delete %>
+              <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),'/publicacoes/'+p.id.to_s+'/edit' %>
+              <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), '/publicacoes/'+p.id.to_s, :confirm => 'Are you sure you want to delete '+p.titulo+'?', :method => :delete %>
             <% end %>
           </td>
+
+          <td valign="top">
+            <% if p.arquivo.present? %>
+              <%= link_to image_tag('pdf.png', :size => '36x36', :title => 'Download em PDF'), '/pdfs/'+p.arquivo %>
+            <% end%>
+          </td>
+
      </tr>
     <% end %>
   <% end %>
@@ -49,7 +56,7 @@
   <% end %>
 
   <tr>
-    <th>
+    <th colspan=2>
       Anais de Eventos
     </th>
   </tr>
@@ -58,11 +65,17 @@
     <% if p.tipo == 'eventos' %>
       <tr>
           <td>
-            <h4><%= link_to p.titulo, p %></h4>
+            <h4><%= link_to p.titulo, '/publicacoes/'+p.id.to_s %></h4>
             <% if session[:permission] == 'admin' %>
-              <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),edit_publicacoe_path(p) %>
-              <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), p, :confirm => 'Are you sure you want to delete '+p.titulo+'?', :method => :delete %>
+              <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),'/publicacoes/'+p.id.to_s+'/edit' %>
+              <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), '/publicacoes/'+p.id.to_s, :confirm => 'Are you sure you want to delete '+p.titulo+'?', :method => :delete %>
             <% end %>
+          </td>
+
+          <td valign="top">
+            <% if p.arquivo.present? %>
+              <%= link_to image_tag('pdf.png', :size => '36x36', :title => 'Download em PDF'), '/pdfs/'+p.arquivo %>
+            <% end%>
           </td>
      </tr>
     <% end %>

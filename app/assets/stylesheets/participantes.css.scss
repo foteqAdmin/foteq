@@ -15,9 +15,17 @@ td a:hover
 	color:black;
 	text-decoration:underline;
 }
-#p_img
+#p_img img
 {
 	float:left;
-	min-width:150px;
-	min-height:150px;
+	max-width:165px;
+	max-height:200px;
+}
+form label
+{
+	float:left;
+}
+form input
+{
+	display:block;
 }

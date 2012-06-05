@@ -8,21 +8,32 @@
     $("title").text($("title").text() +" - Participantes");
   })
 </script>
-<h3><%= @participante.nome %></h3>
-<div id="p_img">
-  <% if @participante.foto_url == nil or @participante.foto_url == "" %>
-    <%= image_tag "default_large.png"%>
-  <% else %>
-    <%= image_tag @participante.foto_url %>
+<% if session['login_name'] == @participante.login %>
+  
+<% else %>
+  <h3><%= @participante.nome %></h3>
+  <div id="p_img">
+    <% if @participante.foto_url == nil or @participante.foto_url == "" %>
+      <%= image_tag "default_large.png" %>
+    <% else %>
+      <%= image_tag @participante.foto_url %>
+    <% end %>
+  </div>
+
+  <p style="width:750px;float:right"><%= @participante.descricao %></p>
+
+  <div class="clear"></div>
+
+  <p>E-mail: <%= @participante.email %></p>
+  <p>Lattes: 
+    <a href="<%= @participante.lattes %>"><%= @participante.lattes %></a>
+  </p>
+<% end%>
+
+<div style="text-align:center;clear:both;">
+  <%= link_to "voltar",url_for(:back) %> 
+  <% if Participante.find_by_login(session[:login_name]) == Participante.find(params[:id]) %>
+    | <%= link_to "editar",edit_participante_path(p)%>
   <% end %>
 </div>
-
-<p style="width:750px;float:right"><%= @participante.descricao %></p>
-
-<div class="clear"></div>
-
-<p>E-mail: <%= @participante.email %></p>
-<p>Lattes: <a href="<%= @participante.lattes %>"><%= @participante.lattes %></a></p>
-
-<div style="text-align:center;clear:both;"><%= link_to "voltar",url_for(:back) %> <% if Participante.find_by_login(session[:login_name]) == Participante.find(params[:id]) %>| <%= link_to "editar",edit_participante_path(p)%><% end %></div>
 
