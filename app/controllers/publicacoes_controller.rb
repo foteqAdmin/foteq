@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class PublicacoesController < ApplicationController
   def index
     @publicacoes = Publicacao.all
@@ -13,7 +15,8 @@ class PublicacoesController < ApplicationController
     if session[:permission] == 'admin'
       @publicacao = Publicacao.new
     else
-      render 'public/404.html'
+      flash[:notice] = "Desculpe, mas você não tem permissão para criar novas publicações."
+      redirect_to "/publicacoes"
     end
   end
 
@@ -21,7 +24,8 @@ class PublicacoesController < ApplicationController
     if session[:login] and session[:permission] == 'admin'
       @publicacao = Publicacao.find(params[:id])
     else
-      render 'public/404.html'
+      flash[:notice] = "Desculpe, mas você não tem permissão para editar esta publicação ou não existe."
+      redirect_to "/publicacoes"
     end
   end
 
@@ -44,7 +48,17 @@ class PublicacoesController < ApplicationController
   def update
     @publicacao = Publicacao.find(params[:id])
 
-    if @publicacao.update_attributes(params[:publicacao])
+    @hash = params[:publicacao]
+
+    if @hash['arquivo'].present?
+      unless @hash['arquivo'].class == String
+        @hash['arquivo'] = DataFile.saveFile(@hash['arquivo'])
+      end      
+    elsif @publicacao.arquivo.present?
+      DataFile.removeFile(@publicacao.arquivo)
+    end
+
+    if @publicacao.update_attributes(@hash)
       flash[:success] = 'Publicacao '+@publicacao.titulo+' foi atualizada com sucesso.'
       redirect_to publicacoes_path
     else
@@ -54,6 +68,11 @@ class PublicacoesController < ApplicationController
 
   def destroy
     @publicacao = Publicacao.find(params[:id])
+
+    if @publicacao.arquivo.present?
+      DataFile.removeFile(@publicacao.arquivo)
+    end
+
     if @publicacao.destroy
       flash[:success] = 'Publicacao '+@publicacao.titulo+' foi removida com sucesso.'
       redirect_to publicacoes_path

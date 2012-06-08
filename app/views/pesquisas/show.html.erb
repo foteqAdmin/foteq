@@ -33,7 +33,7 @@
             <% temp = @pesquisa.participantes['nome'+j.to_s] %>
           <% end %>
 
-          <% parts[j-1] = temp+' - '+@pesquisa.participantes['tipo'+j.to_s]%>
+          <% parts[j-1] = temp+' - '+@pesquisa.participantes['tipo'+j.to_s] %>
         <% end %>
         <strong>Participantes: </strong><%= raw parts.join(" / ")+"." %><br/>
 

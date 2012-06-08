@@ -57,13 +57,25 @@
 		  <div id="<%= key %>">
 		    <% case key %>
 		      <% when :success %>
-		        <%= image_tag 'success.png', :size => "36x36" %>
+                        <div>
+		          <%= image_tag 'success.png', :size => "28x28" %>
+                          <h5>Success:</h5>
+                          <div class="clear"></div>
+                        </div>
 		      <% when :notice %>
-		        <%= image_tag 'notice.png', :size => "36x36" %>
+                        <div>
+		          <%= image_tag 'notice.png', :size => "28x28" %>
+                          <h5>Notice:</h5>
+                          <div class="clear"></div>
+                        </div>
 		      <% when :error %>
-		        <%= image_tag 'error.png', :size => "36x36" %>
+                        <div>
+		          <%= image_tag 'error.png', :size => "28x28" %>
+                          <h5>Error:</h5>
+                          <div class="clear"></div>
+                        </div>
 		    <% end %>
-		    <%= value %>
+		    <p><%= value %></p>
 		  </div>
 		<% end %>
 

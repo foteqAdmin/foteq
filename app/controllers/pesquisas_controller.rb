@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class PesquisasController < ApplicationController
   def index
     @pesquisa = Pesquisa.all
@@ -12,7 +14,8 @@ class PesquisasController < ApplicationController
     if session[:permission] == 'admin'
       @pesquisa = Pesquisa.new
     else
-      render 'public/404.html'
+      flash[:notice] = "Desculpe, mas você não tem permissão para criar novas pesquisas."
+      redirect_to "/pesquisas"
     end
   end
 
@@ -20,7 +23,8 @@ class PesquisasController < ApplicationController
     if session[:login] and session[:permission] == 'admin'
       @pesquisa = Pesquisa.find(params[:id])
     else
-      render 'public/404.html'
+      flash[:notice] = "Desculpe, mas você não tem permissão para editar esta pesquisa ou não exista."
+      redirect_to "/pesquisas"
     end
   end
 

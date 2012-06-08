@@ -1,26 +1,106 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>The change you wanted was rejected (422)</title>
-  <style type="text/css">
-    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
-    div.dialog {
-      width: 25em;
-      padding: 0 4em;
-      margin: 4em auto 0 auto;
-      border: 1px solid #ccc;
-      border-right-color: #999;
-      border-bottom-color: #999;
-    }
-    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
-  </style>
+  <title>FOTEQ</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta name="keywords" content="FOTEQ, foteq, UFRN, NUPEG, nupeg" />
+  <meta name="description" content="Láboratório de Fotoquímica e Equilíbrio de Fases - FOTEQ. Todos os participantes, pesquisas, publicações e projetos do FOTEQ se encontram nesse website. Entre em contato conosco a vontade." />
+  <meta name="revised" content="Ruben O Chiavone, 4/2012" />
+  <link href="/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+  <link href="/assets/application.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/home.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/participantes.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/pesquisas.css?body=1" media="all" rel="stylesheet" type="text/css" />
+<link href="/assets/publicacoes.css?body=1" media="all" rel="stylesheet" type="text/css" />
+  <script src="/assets/jquery.js?body=1" type="text/javascript"></script>
+<script src="/assets/jquery_ujs.js?body=1" type="text/javascript"></script>
+<script src="/assets/home.js?body=1" type="text/javascript"></script>
+<script src="/assets/participantes.js?body=1" type="text/javascript"></script>
+<script src="/assets/pesquisas.js?body=1" type="text/javascript"></script>
+<script src="/assets/publicacoes.js?body=1" type="text/javascript"></script>
+<script src="/assets/application.js?body=1" type="text/javascript"></script>
+  <meta content="authenticity_token" name="csrf-param" />
+<meta content="LvOjW9l56DAupAWev/TdWLd0Q5Kyg5bjPHbwgeTTnyk=" name="csrf-token" />
 </head>
-
 <body>
-  <!-- This file lives in public/422.html -->
-  <div class="dialog">
-    <h1>The change you wanted was rejected.</h1>
-    <p>Maybe you tried to change something you didn't have access to.</p>
-  </div>
+<div id="main">
+	<div id="header">
+		<a href="/"><img alt="Foteq2" src="/assets/FOTEQ2.png" /></a>
+	</div>
+
+	<div class="clear"></div>
+
+	<div id="menu">
+		<ul>
+			<a href="/"><li id="n1">Home</li></a>
+			<a href="/participantes"><li id="n2">Participantes</li></a>
+			<a href="/pesquisas"><li id="n3">Pesquisa</li></a>
+			<a href="/publicacoes"><li id="n4">Publicações</li></a>
+			<a href="/home/contato"><li id="n5">Contato</li></a>
+		</ul>
+
+		<span id="login">login <img alt="Setinhabranca" src="/assets/setinhabranca.png" /></span>
+
+		<div id="div_login">
+                          <form accept-charset="UTF-8" action="/application/login" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="LvOjW9l56DAupAWev/TdWLd0Q5Kyg5bjPHbwgeTTnyk=" /></div>
+			    <span style="margin-right:100px;">Login:</span><br/>
+                            <input id="name" name="name" required="required" size="15" type="text" />
+			    Senha:<br/>
+                            <input id="pass" name="pass" required="required" size="15" type="password" />
+                            Aluno? <a href="/participantes/new">Cadastre-se aqui.</a><br/><br/>
+			    <input name="commit" type="submit" value="Sign in" />
+</form>		</div>
+	</div>
+
+	<div class="clear"></div>
+
+	<div id="content">
+		<div id="content_child">
+			<img src="assets/notice.png" width="48px" height="48px" style="display:inline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 style="display:inline;">Erro 422 - Entidade improcessável</h3>
+			<p>A requisição foi realizada com sucesso, mas era incapaz de proseguir devido a erros de semântica. Tente novamente com outros parâmetros. Alternativamente, você pode tentar ir à <a href="/">página inicial</a> ou entrar em <a href="/home/contato">contato</a> conosco para encontrar uma solução.</p>
+		</div>
+	</div>
+
+	
+
+
+	<div class="clear"></div>
+</div>
+
+<div id="footer">
+
+	<dfn>FOTEQ - Laboratório de fotoquímica e equilíbrio de fases</dfn><br/>
+	<dfn>Campus Universitário UFRN - Núcleo Tecnológico NT/PPGEQ/NUPEG - Departamento de Engenharia Química</dfn><br/>
+	<dfn>Lagoa Nova CEP 59066-800 - Natal/RN - Fone: (+55 84) 3215 3773/Fax: (+55 84) 3215 3770</dfn><br/><br/>
+
+	<dfn>Parceiros:</dfn>
+	<div id="parceiros">
+		
+		<a href="http://www.sistemas.ufrn.br/portalufrn/PT/" target="_blank"><img alt="ufrn logo" src="/assets/ufrn.png" title="UFRN - Universidade Federal do Rio Grande do Norte" /></a>
+		<a href="http://www.nupeg.ufrn.br/" target="_blank"><img alt="NUPEG logo" src="/assets/nupeg.png" title="NUPEG - Núcleo de Pesquisa em Petróleo e Gás" /></a>
+		<a href="http://www.cnpq.br/" target="_blank"><img alt="cnpq logo" src="/assets/cnpq.png" title="CNPq - Conselho Nacional de Desenvolvimento Científico e Tecnológico" /></a>
+		<a href="http://www.capes.gov.br/" target="_blank"><img alt="capes logo" src="/assets/capes.png" title="CAPES - Coordenação de Aperfeiçoamento de Pessoal de Nível Superior" /></a>
+		<a href="http://www.anp.gov.br/?id=596" target="_blank"><img alt="prh logo" src="/assets/prh.png" title="PRH-ANP - Programa de Recursos Humanos PRH-ANP" /></a>
+		<br/>
+		<a href="http://www.anp.gov.br/" target="_blank"><img alt="anp logo" src="/assets/anp.png" title="ANP - Agência Nacional de Petróleo, Gás Natural e Biocombustíveis" /></a>
+		<a href="http://www.petrobras.com.br/pt/" target="_blank"><img alt="Petrobras logo" src="/assets/petrobras.png" title="Petrobras" /></a>
+		<a href="http://www.cnpq.br/programas/inct/_apresentacao/" target="_blank"><img alt="inct logo" src="/assets/inct.png" title="INCT - Institutos Nacionais de Ciência e Tecnologia" /></a>
+		<a href="http://www.cepema.usp.br/" target="_blank"><img alt="cepema logo" src="/assets/cepema.png" title="CEPEMA - Centro de Capacitação e Pesquisa em Meio-Ambiente" /></a>
+	</div>
+	
+	<div class="clear"></div>
+	<br/><br/>
+
+	<div id="footer_child">
+		<div><a href="/home/contato">Contato</a></div>
+		<div><a href="/publicacoes">Publicações</a></div>
+		<div><a href="/pesquisas">Pesquisa</a></div>
+		<div><a href="/participantes">Participantes</a></div>
+		<div><a href="/">Home</a></div>
+	</div>
+
+	
+</div>
+
 </body>
 </html>

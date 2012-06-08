@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class ParticipantesController < ApplicationController
   def index
     @participante = Participante.all
@@ -7,7 +9,8 @@ class ParticipantesController < ApplicationController
     if Participante.find_by_id(params[:id]).present?
       @participante = Participante.find(params[:id])
     else
-      render 'public/404.html'
+      flash[:notice] = "Participante não existe ou você digitou errado."
+      redirect_to "/participantes"
     end
   end
 
@@ -22,10 +25,12 @@ class ParticipantesController < ApplicationController
       elsif Participante.find_by_login(session[:login_name]) == Participante.find(params[:id])
         @participante = Participante.find(params[:id])
       else
-        render 'public/404.html'
+        flash[:notice] = "Desculpe, mas você não tem permissão para editar este participante."
+        redirect_to "/participantes"
       end
     else
-       render 'public/404.html'
+      flash[:notice] = "Desculpe, mas você não tem permissão para editar este participante ou você tem que fazer login para editar."
+      redirect_to "/participantes"
     end
   end
 
@@ -39,7 +44,7 @@ class ParticipantesController < ApplicationController
 
     if @participante.save
       FoteqMailer.welcome(@participante).deliver
-      flash[:success] = 'Participante '+@participante.nome+' was successfully created'
+      flash[:success] = 'Participante '+@participante.nome+' foi criado com sucesso.'
       redirect_to @participante
     else
       render 'new'
@@ -67,7 +72,7 @@ class ParticipantesController < ApplicationController
     end
 
     if @participante.update_attributes(@hash)
-      flash[:success] = 'Participante '+@participante.nome+' was successfully updated'
+      flash[:success] = 'Participante '+@participante.nome+' foi atualizado com sucesso.'
       redirect_to participantes_path
     else
       render 'edit'
@@ -81,11 +86,11 @@ class ParticipantesController < ApplicationController
     end
 
     if @participante.destroy
-      flash[:success] = 'Participante '+@participante.nome+' was succesfully deleted'
+      flash[:success] = 'Participante '+@participante.nome+' foi deletado com sucesso.'
       redirect_to participantes_path
     else
       flash[:error] = 'Algum erro ocorreu quando '+@participante.nome+' foi ser removido.'
-      redirect_to :back
+      redirect_to "/participantes"
     end
   end
 

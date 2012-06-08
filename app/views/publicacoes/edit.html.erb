@@ -177,7 +177,7 @@
     <%= label(:publicacao, :arquivo, 'Arquivo', :style => "width:156px") %>
     <% if @publicacao.arquivo.present? %>
       <%= link_to image_tag('pdf.png', :title => 'Visualizar em PDF'), '/pdfs/'+@publicacao.arquivo %><br/>
-      <span style="margin-left:156px;font-size:9pt">Nome do arquivo: <%= @publicacao.arquivo %></span><br/>
+      <span style="margin-left:156px;font-size:9pt">Nome do arquivo: <%= link_to @publicacao.arquivo, '/pdfs/'+@publicacao.arquivo %></span><br/>
       <button style="margin-left:156px;">Alterar</button><br/>
       <%= hidden_field(:publicacao, :arquivo, :value => @publicacao.arquivo)%>
     <% else %>
