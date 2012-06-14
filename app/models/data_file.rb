@@ -1,7 +1,7 @@
 class DataFile < ActiveRecord::Base
   def self.savePic(url)
     #only images little than 4MB
-    if File.new(url.original_filename,'r').size > 4000000
+    if File.new(url,'r').size > 4000000
       return nil
     end
     filename = File.basename(url.original_filename)

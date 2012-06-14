@@ -36,8 +36,11 @@ class ParticipantesController < ApplicationController
 
   def create
     @hash = Participante.new(params[:participante])
+
     if @hash['foto_url'].present?
-      @hash['foto_url'] = DataFile.savePic(@hash['foto_url'])
+      unless @hash['foto_url'].class == String
+        @hash['foto_url'] = DataFile.savePic(@hash['foto_url'])
+      end
     end
 
     @participante = @hash

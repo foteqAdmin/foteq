@@ -1,6 +1,15 @@
 <script>
   $(document).ready(function()
   {
+    var maximum = 0;
+    $("label").each(function()
+    {
+      if ($(this).width() > maximum)
+      maximum = $(this).width();
+    });
+    $("label").width(maximum+100);
+    $("button").css("margin-left",(maximum+100)+'px');
+    $("label").css("display","block");
     $("#n5").css("background-color","white");
     $("#n5").css("border-top","4px solid #441d8d");
     $("#n5").css("border-top-right-radius","10px");
@@ -218,13 +227,13 @@
 </script>
 
 <%= form_for :contact, :name => "contato" do |f| %>
-  Nome:<br/>
+  <label>Nome:</label>
   <%= f.text_field :name, :id => "name",:size => 20 %><br/>
-  E-mail:<br/>
+  <label>E-mail:</label>
   <%= f.text_field :from, :id => "email", :size => 20 %><br/>
-  Assunto:<br/>
+  <label>Assunto:</label>
   <%= f.text_field :subject, :id => "subject", :size => 20 %><br/>
-  Mensagem:<br/>
+  <label>Mensagem:</label>
   <%= f.text_area :message, :id => "msg" %><br/>
   <%= f.submit 'Enviar', :id => "submit_button" %>
 <% end %> 
