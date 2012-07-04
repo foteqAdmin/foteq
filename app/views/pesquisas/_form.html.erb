@@ -135,11 +135,18 @@
 </script>
 <% if @pesquisa.errors.any? %>
   <div id="error_explanation" >
-    <h5><%= pluralize(@pesquisa.errors.count, "error") %>
-    prohibited this pesquisa from being saved:</h5>
+    <h5><%= image_tag "error.png", :size => '28x28', :style => "float:left;margin:-6px 5px 0 -10px" %><%= pluralize(@pesquisa.errors.count, "erro") %>
+    proibiram esta pesquisa de ser salva:</h5>
     <ul>
-      <% @pesquisa.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+      <% @pesquisa.errors.each do |attr, msg| %>
+      <% if attr.to_s == 'descricao' %>
+        <% attr = 'descrição' %>
+      <% elsif attr.to_s == 'participantes' %>
+        <% attr = 'participante' %>
+      <% elsif attr.to_s == 'financiadores' %>
+        <% attr = 'financiador' %>
+      <% end %>
+        <li><%= attr.to_s.capitalize!+" "+msg %></li>
       <% end %>
     </ul>
   </div>

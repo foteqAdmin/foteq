@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
       session[:login_name] = params[:name]
       redirect_to "/participantes/"+participante.id.to_s
     else
-      flash[:error] = 'Login ou senha inválidos.'
+      flash[:error] = ['Login ou senha inválidos.']
       redirect_to :back
     end
   end

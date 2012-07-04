@@ -174,6 +174,12 @@
   <br/>
 
   <div>
+    <%= label(:publicacao, :abstract, 'Abstract *', :style => "width:156px") %>
+    <%= text_area(:publicacao, :abstract, :rows => 10, :cols => 70) %><br/>
+  </div>
+  <br/>
+
+  <div>
     <%= label(:publicacao, :arquivo, 'Arquivo', :style => "width:156px") %>
     <% if @publicacao.arquivo.present? %>
       <%= link_to image_tag('pdf.png', :title => 'Visualizar em PDF'), '/pdfs/'+@publicacao.arquivo %><br/>

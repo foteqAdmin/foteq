@@ -13,11 +13,19 @@
 
   <tr>
       <td>
-        <h4><%= @pesquisa.nome %></h4>
-        <strong>Descrição: </strong><%= @pesquisa.descricao %><br/>
+        <h3><%= @publicacao.titulo %></h3>
+				<% if session[:permission] == 'admin' %>
+          	<%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),'/publicacoes/'+@publicacao.id.to_s+'/edit' %>
+          	<%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), p, :confirm => 'Are you sure you want to delete '+@publicacao.titulo+'?', :method => :delete %>
+        <% end %>
 
+				<% if @publicacao.arquivo.present? %>
+					<%= link_to (image_tag "pdf.png", :size => '32x32', :title => "Download PDF", :style => "margin:12.5px 0 0 0;float:right"), '/pdfs/'+@publicacao.arquivo %>
+				<% end %>
+
+				<br/><br/>
         <% i = 0%>
-        <% @pesquisa.participantes.each do i=i+1%>
+        <% @publicacao.participantes.each do i=i+1%>
         <% end %>
 
         <% if i == 0 %>
@@ -25,35 +33,21 @@
         <% end %>
 
         <% parts = Array.new%>
-        <% for j in 1..i/2%>
+        <% for j in 1..i%>
 
-          <% if Participante.find_by_nome(@pesquisa.participantes['nome'+j.to_s]).present? %>
-            <% temp =  link_to(Participante.find_by_nome(@pesquisa.participantes['nome'+j.to_s]).nome, Participante.find_by_nome(@pesquisa.participantes['nome'+j.to_s])) %>
+          <% if Participante.find_by_nome(@publicacao.participantes['nome'+j.to_s]).present? %>
+            <% temp =  link_to(Participante.find_by_nome(@publicacao.participantes['nome'+j.to_s]).nome, Participante.find_by_nome(@publicacao.participantes['nome'+j.to_s])) %>
           <% else %>
-            <% temp = @pesquisa.participantes['nome'+j.to_s] %>
+            <% temp = @publicacao.participantes['nome'+j.to_s] %>
           <% end %>
 
-          <% parts[j-1] = temp+' - '+@pesquisa.participantes['tipo'+j.to_s]%>
+          <% parts[j-1] = temp %>
         <% end %>
-        <strong>Participantes: </strong><%= raw parts.join(" / ")+"." %><br/>
+        <span style="font-size:11pt"><%= raw parts.join(", ") %></span><br/>
 
-        <% k = 0%>
-        <% @pesquisa.financiadores.each do k=k+1%>
-        <% end %>
-
-        <% if k == 0 %>
-          <% k = 2 %>
-        <% end %>
-
-        <% finan = Array.new%>
-        <% for l in 1..k/2%>
-          <% finan[l-1] = @pesquisa.financiadores['nome'+l.to_s]+' - '+@pesquisa.financiadores['tipo'+l.to_s]%>
-        <% end %>
-        <strong>Financiadores: </strong><%= finan.join(" / ")+"." %><br/>
-        <% if session[:permission] == 'admin' %>
-          <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),edit_pesquisa_path(p) %>
-          <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), p, :confirm => 'Are you sure you want to delete '+@pesquisa.nome+'?', :method => :delete %>
-        <% end %>
+				<h4>Abstract</h4>
+				<%= simple_format(@publicacao.abstract, :style => "text-align:justify") %>
+        
       </td>
   </tr>
 </table>

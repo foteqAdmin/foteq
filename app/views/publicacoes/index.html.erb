@@ -52,20 +52,39 @@
                 <% nome = nome1+nome2 %>
                 <% temp = link_to(nome, Participante.find_by_nome(p.participantes['nome'+j.to_s])) %>
               <% else %>
-                <% temp = p.participantes['nome'+j.to_s] %>
+                <% nome = p.participantes['nome'+j.to_s].split %>
+                <% if nome.last == "Filho" or nome.last == "Neto" %>
+                  <% nome1 = nome.pop %>
+                  <% nome1 = nome.last.upcase+"-"+nome1.upcase+"," %>
+                <% else %>
+                  <% nome1 = nome.last.upcase+"," %>
+                <% end %>
+                <% nome2 = String.new %>
+                <% nome.each do |n| %>
+                  <% if n == "da" or n == "do" or n == "dos" or n == "de" or n == "Prof." or n == "Dr." %>
+                    <% next %>
+                  <% elsif n != nome.last %>
+                    <% nome2 = nome2 + " "+n[0].upcase+"." %>
+                  <% end %>
+                <% end %>
+                <% temp = nome1+nome2 %>
               <% end %>
 
               <% parts[j-1] = temp %>
             <% end %>
 
-            <h4><%= raw(parts.join(", ")) %>. <%= link_to p.titulo, '/publicacoes/'+p.id.to_s %></h4>
+						<% info = String.new %>
+						<% info = info + ", v. #{p.volume}" if p.volume.present? %>
+						<% info = info + ", p. #{p.pag_ini}-#{p.pag_final}" if p.pag_ini.present? and p.pag_final.present? %>
+
+            <h4><%= raw(parts.join(", ")) %>. <%= link_to p.titulo, '/publicacoes/'+p.id.to_s %><%= ". #{p.suporte}#{info}, #{p.ano}." %></h4>
             <% if session[:permission] == 'admin' %>
               <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),'/publicacoes/'+p.id.to_s+'/edit' %>
               <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), '/publicacoes/'+p.id.to_s, :confirm => 'Are you sure you want to delete '+p.titulo+'?', :method => :delete %>
             <% end %>
           </td>
 
-          <td valign="top">
+          <td valign="center">
             <% if p.arquivo.present? %>
               <%= link_to image_tag('pdf.png', :size => '36x36', :title => 'Download em PDF'), '/pdfs/'+p.arquivo %>
             <% end%>

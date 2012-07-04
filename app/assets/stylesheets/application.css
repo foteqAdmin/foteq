@@ -7,6 +7,7 @@ body
 	margin:0;
 	padding:0;
 	background-color:white;
+	font-family:Arial;
 }
 .clear
 {
@@ -190,14 +191,17 @@ a img
 	margin:0;
 	color:white;
 }
-#success p
-{	padding: 7px;
+#success ul li
+{
 	padding-bottom: 0;
+	font-size:13px;
+        list-style:square outside none;
 }
 #notice
 {
 	width: 450px;
 	margin-bottom: 20px;
+	background-color: #f0f0f0;
 	margin:10px;
 	border:2px solid #fdbe30;
 }
@@ -218,14 +222,17 @@ a img
 	margin:0;
 	color:white;
 }
-#notice p
-{	padding: 7px;
+#notice ul li
+{
 	padding-bottom: 0;
+	font-size:13px;
+        list-style:square outside none;
 }
 #error
 {
 	width: 450px;
 	margin-bottom: 20px;
+	background-color: #f0f0f0;
 	margin:10px;
 	border:2px solid #b20d0d;
 }
@@ -246,9 +253,11 @@ a img
 	margin:0;
 	color:white;
 }
-#error p
-{	padding: 7px;
+#error ul li
+{
 	padding-bottom: 0;
+	font-size:13px;
+        list-style:square outside none;
 }
 #error_explanation
 {
@@ -263,7 +272,7 @@ a img
 {
 	text-align: left;
 	font-weight: bold;
-	padding: 5px 5px 5px 15px;
+	padding: 7px 5px 7px 15px;
 	font-size: 12px;
 	margin: -7px;
 	margin-bottom: 0px;

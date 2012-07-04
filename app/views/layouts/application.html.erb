@@ -52,29 +52,33 @@
 
 	<div id="content">
 
-		<% flash.each do |key, value|%>
+		<% flash.each do |key, value| %>
 		  <div id="<%= key %>">
 		    <% case key %>
 		      <% when :success %>
                         <div>
 		          <%= image_tag 'success.png', :size => "28x28" %>
-                          <h5>Success:</h5>
+                          <h5>Sucesso:</h5>
                           <div class="clear"></div>
                         </div>
 		      <% when :notice %>
                         <div>
 		          <%= image_tag 'notice.png', :size => "28x28" %>
-                          <h5>Notice:</h5>
+                          <h5>Notícia:</h5>
                           <div class="clear"></div>
                         </div>
 		      <% when :error %>
                         <div>
 		          <%= image_tag 'error.png', :size => "28x28" %>
-                          <h5>Error:</h5>
+                          <h5>Erro:</h5>
                           <div class="clear"></div>
                         </div>
 		    <% end %>
-		    <p><%= value %></p>
+                    <ul>
+                      <% value.each do |v| %>
+                        <li><%= v %></li>
+                      <% end %>
+                    </ul>
 		  </div>
 		<% end %>
 

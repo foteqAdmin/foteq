@@ -14,7 +14,7 @@ class PesquisasController < ApplicationController
     if session[:permission] == 'admin'
       @pesquisa = Pesquisa.new
     else
-      flash[:notice] = "Desculpe, mas você não tem permissão para criar novas pesquisas."
+      flash[:notice] = ["Desculpe, mas você não tem permissão para criar novas pesquisas."]
       redirect_to "/pesquisas"
     end
   end
@@ -23,7 +23,7 @@ class PesquisasController < ApplicationController
     if session[:login] and session[:permission] == 'admin'
       @pesquisa = Pesquisa.find(params[:id])
     else
-      flash[:notice] = "Desculpe, mas você não tem permissão para editar esta pesquisa ou não exista."
+      flash[:notice] = ["Desculpe, mas você não tem permissão para editar esta pesquisa ou não exista."]
       redirect_to "/pesquisas"
     end
   end
@@ -32,7 +32,7 @@ class PesquisasController < ApplicationController
     @pesquisa = Pesquisa.new(params[:pesquisa])
 
     if @pesquisa.save
-      flash[:success] = 'Pesquisa '+@pesquisa.nome+' foi criada com sucesso.'
+      flash[:success] = ['Pesquisa '+@pesquisa.nome+' foi criada com sucesso.']
       redirect_to @pesquisa
     else
       render 'new'
@@ -43,7 +43,7 @@ class PesquisasController < ApplicationController
     @pesquisa = Pesquisa.find(params[:id])
 
     if @pesquisa.update_attributes(params[:pesquisa])
-      flash[:success] = 'Pesquisa '+@pesquisa.nome+' foi atualizada com sucesso.'
+      flash[:success] = ['Pesquisa '+@pesquisa.nome+' foi atualizada com sucesso.']
       redirect_to pesquisas_path
     else
       render 'edit'
@@ -53,10 +53,10 @@ class PesquisasController < ApplicationController
   def destroy
     @pesquisa = Pesquisa.find(params[:id])
     if @pesquisa.destroy
-      flash[:success] = 'Pesquisa '+@pesquisa.nome+' foi removida com sucesso.'
+      flash[:success] = ['Pesquisa '+@pesquisa.nome+' foi removida com sucesso.']
       redirect_to pesquisas_path
     else
-      flash[:error] = 'Algum erro ocorreu quando '+@pesquisa.nome+' foi ser removida.'
+      flash[:error] = ['Algum erro ocorreu quando '+@pesquisa.nome+' foi ser removida.']
       redirect_to :back
     end
   end

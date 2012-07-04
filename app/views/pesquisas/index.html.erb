@@ -10,24 +10,14 @@
 </script>
 <h4>Projetos de Pesquisa: </h4>
 
-<table cellspacing="0">
-  <% if session[:permission] == 'admin' %>
-    <tr>
-      <td>
-        <%= link_to image_tag("doc_add.png", :title => "Adicionar pesquisa"), new_pesquisa_path %>
-      </td>
-    </tr>
-  <% end %>
+<% if session[:permission] == 'admin' %>
+  <%= link_to image_tag("doc_add.png", :title => "Adicionar pesquisa"), new_pesquisa_path %>
+<% end %> 
 
-  <% @pesquisa.each do |p| %>
-  <tr>
-      <td>
-        <h4><%= link_to p.nome, p %></h4>
-        <% if session[:permission] == 'admin' %>
-          <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),edit_pesquisa_path(p) %>
-          <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), p, :confirm => 'Are you sure you want to delete '+p.nome+'?', :method => :delete %>
-        <% end %>
-      </td>
-  </tr>
+<% @pesquisa.each do |p| %>
+  <h4><%= link_to p.nome, p %></h4>
+  <% if session[:permission] == 'admin' %>
+    <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),edit_pesquisa_path(p) %>
+    <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), p, :confirm => 'Are you sure you want to delete '+p.nome+'?', :method => :delete %>
   <% end %>
-</table>
+<% end %>

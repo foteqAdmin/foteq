@@ -27,11 +27,16 @@
 </script>
 <% if @participante.errors.any? %>
   <div id="error_explanation" >
-    <h5><%= pluralize(@participante.errors.count, "error") %>
-    prohibited this participante from being saved:</h5>
+    <h5><%= image_tag "error.png", :size => '28x28', :style => "float:left;margin:-6px 5px 0 -10px" %><%= pluralize(@participante.errors.count, "erro") %>
+    proibiram este participante de ser salvo:</h5>
     <ul>
-      <% @participante.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+      <% @participante.errors.each do |attr, msg| %>
+        <% if attr.to_s == 'pass' %>
+          <% attr = "senha" %>
+        <% elsif attr.to_s == 'pass_confirmation' %>
+          <% attr = "confirmação da senha" %>
+        <% end %>
+        <li><%= attr.to_s.capitalize!+" "+msg %></li>
       <% end %>
     </ul>
   </div>
@@ -45,10 +50,10 @@
   <%= p.text_field :login, :size => 15 %><br/>
 
   <% if !@participante.password.present? or @participante.errors.any? %>
-    <%= p.label :pass, 'Password *' %>
+    <%= p.label :pass, 'Senha *' %>
     <%= p.password_field :pass, :size => 15 %><br/>
 
-    <%= p.label :pass_confirmation, 'Confirmar Password *' %>
+    <%= p.label :pass_confirmation, 'Confirmar senha *' %>
     <%= p.password_field :pass_confirmation, :size => 15 %><br/>
   <% end %>
 

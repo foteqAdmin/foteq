@@ -6,12 +6,83 @@
     $("#n2").css("border-top-right-radius","10px");
     $("#n2").css("color","black");
     $("title").text($("title").text() +" - Participantes");
+		$("#l1").click(function()
+		{
+			$("#projetos").css("display","block");
+			$("#publicacoes").css("display","none");
+			$("#atividades").css("display","none");
+			$("#configuracoes").css("display","none");
+		});
+		$("#l2").click(function()
+		{
+			$("#projetos").css("display","none");
+			$("#publicacoes").css("display","block");
+			$("#atividades").css("display","none");
+			$("#configuracoes").css("display","none");
+		});
+		$("#l3").click(function()
+		{
+			$("#projetos").css("display","none");
+			$("#publicacoes").css("display","none");
+			$("#atividades").css("display","block");
+			$("#configuracoes").css("display","none");
+		});
+		$("#l4").click(function()
+		{
+			$("#projetos").css("display","none");
+			$("#publicacoes").css("display","none");
+			$("#atividades").css("display","none");
+			$("#configuracoes").css("display","block");
+		});
   })
 </script>
 <% if session['login_name'] == @participante.login %>
-  
+	<div>
+		<div id="part_menu_parent">
+			<ul id="part_menu">
+				<li id="l1"><%= image_tag "research.png" %> Projetos</li>
+				<li id="l2"><%= image_tag "publication.png" %> Publicações</li>
+				<li id="l3"><%= image_tag "list.png" %> Atividades</li>
+				<li id="l4"><%= image_tag "settings.png" %> Configurações</li>
+			</ul>
+
+			<div class="clear"></div>
+		</div>
+
+		<div style="float:right;margin:0 0 5px 10px;">
+			<% if @participante.foto_url == nil or @participante.foto_url == "" %>
+		    <%= image_tag "default_large.png" %>
+		  <% else %>
+		    <%= image_tag @participante.foto_url %>
+		  <% end %><br/>
+			<button>Alterar foto</button>
+		</div>
+
+		<div id="part_content">
+			<div id="projetos">
+				<% if @psq.present? %>
+					<%= puts 'hehe' %>
+				<% else %>
+					<%= @participante.nome+' não faz parte de nenhum projeto de pesquisa.' %>
+				<% end %>
+			</div>
+			<div id="publicacoes">
+				<% if @pubs.present? %>
+					<%= puts 'hehe' %>
+				<% else %>
+					<%= @participante.nome+' não tem nenhuma publicação.' %>
+				<% end %>
+			</div>
+			<div id="atividades">
+				atitividades
+			</div>
+			<div id="configuracoes">
+				configuracoes
+			</div>
+		</div>
+	</div>
 <% else %>
-  <h3><%= @participante.nome %></h3>
+  <h3><%= @participante.nome %></h3><br/><br/>
   <div id="p_img">
     <% if @participante.foto_url == nil or @participante.foto_url == "" %>
       <%= image_tag "default_large.png" %>
@@ -20,20 +91,17 @@
     <% end %>
   </div>
 
-  <p style="width:750px;float:right"><%= @participante.descricao %></p>
+  <%= simple_format(@participante.descricao, :style => "width:750px;float:right;text-align:justify") %>
 
   <div class="clear"></div>
 
   <p>E-mail: <%= @participante.email %></p>
   <p>Lattes: 
-    <a href="<%= @participante.lattes %>"><%= @participante.lattes %></a>
+    <a href="<%= @participante.lattes %>" target="_blank"><%= @participante.lattes %></a>
   </p>
 <% end%>
 
 <div style="text-align:center;clear:both;">
-  <%= link_to "voltar",url_for(:back) %> 
-  <% if Participante.find_by_login(session[:login_name]) == Participante.find(params[:id]) %>
-    | <%= link_to "editar",edit_participante_path(p)%>
-  <% end %>
+  <%= link_to "voltar",url_for(:back) %>
 </div>
 

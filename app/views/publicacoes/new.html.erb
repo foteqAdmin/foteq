@@ -85,11 +85,14 @@
 
 <% if @publicacao.errors.any? %>
   <div id="error_explanation" >
-    <h5><%= pluralize(@publicacao.errors.count, "error") %>
-    prohibited this publicação from being saved:</h5>
+    <h5><%= image_tag "error.png", :size => '28x28', :style => "float:left;margin:-6px 5px 0 -10px" %><%= pluralize(@publicacao.errors.count, "erro") %>
+    proibiram esta publicação de ser salva:</h5>
     <ul>
-      <% @publicacao.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+      <% @publicacao.errors.each do |attr, msg| %>
+        <% if attr.to_s == 'participantes' %>
+          <% attr = 'autor' %>
+        <% end %>
+        <li><%= attr.to_s.capitalize!+" "+msg %></li>
       <% end %>
     </ul>
   </div>
@@ -161,6 +164,12 @@
       <% end %>
     </table>
   <% end %>
+  <br/>
+
+  <div>
+    <%= label(:publicacao, :abstract, 'Abstract *', :style => "width:156px") %>
+    <%= text_area(:publicacao, :abstract, :rows => 10, :cols => 70) %><br/>
+  </div>
   <br/>
 
   <%= label(:publicacao, :arquivo, 'Arquivo', :style => "width:156px") %>

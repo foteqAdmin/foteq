@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120604113747) do
+ActiveRecord::Schema.define(:version => 20120625133750) do
 
   create_table "data_files", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20120604113747) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.string   "tipo"
+    t.text     "abstract"
   end
 
 end
