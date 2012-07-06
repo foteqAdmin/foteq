@@ -14,6 +14,7 @@ error.png: error-62d18901b9a3827be3132a80358eea19.png
 favicon.ico: favicon-48ca50b134242f43f15d126be610b2fc.ico
 inct.png: inct-19032dd4a1cd9aee6474e4deb9c4b104.png
 list.png: list-856784189a733104714bf5e8c5c16f97.png
+loading.gif: loading-0e48564686541f63f5b9723c05ec67aa.gif
 notice.png: notice-e727f25025655b1df09424fa3d61895a.png
 nupeg.png: nupeg-66866e2f95be2852ecd3eaa0964ba99d.png
 pdf.png: pdf-d6dc2439266975bc79ea086eeaa0220e.png
@@ -32,5 +33,5 @@ task.png: task-b9657c19a44aaf4f239d99fc7a035de8.png
 trash-icon.png: trash-icon-5cd381d9edbbcf05c4644ee1cc05ff6e.png
 ufrn.png: ufrn-05d59fdaf704508941d703a4d3f5c72f.png
 user_add.png: user_add-dd1c7cd91de7f57f65e89c568c2d70dc.png
-application.js: application-075c02d81402d3e782e40564f4a92fee.js
-application.css: application-8d69a28182e34ac9218d6e64c6f28a5b.css
+application.js: application-aa3848fd7e8155f3d2ab8f9698ce82b4.js
+application.css: application-e94c3214efbed4a616d04fa565d64344.css

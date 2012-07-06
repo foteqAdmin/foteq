@@ -13,6 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+function stopBrowser()
+{
+	if (window.stop !== undefined) window.stop();
+	else if (document.execCommand !== undefined) document.execCommand("Stop", false);
+}
 $(document).ready(function()
 {
 	$("#div_login").hide();

@@ -1,0 +1,33 @@
+<script>
+    $(document).ready(function()
+    {
+        $("#loading").hide();
+        $("#cancel").hide();
+        $("#file").change(function()
+        {
+            if ($("#notice").text() != "") $("#notice").text("");
+            $("#loading").show();
+            $("#cancel").show();
+            document.form.submit();
+        });
+	$(document.form).submit(function(event)
+	{
+           $("#cancel").click(function(event)
+	   {
+		alert($(event).get());
+              $(this).hide();
+              $("#loading").hide();
+              event.preventDefault();
+	   }); 
+	});
+    })
+</script>
+<%= form_tag('/files/create_image', :method => "post", :multipart => true, :name => 'form') do |f| %>
+
+  <div class="field">
+    <%= file_field_tag :file %>
+    <%= image_tag 'loading.gif', :id => 'loading', :size => '26x26', :style => "margin:0 5px 0 5px" %><br/>
+    <span id="notice" style="color:red;font-family:Arial;font-size:12px"><%= notice %></span>
+    <button id="cancel">Cancelar</button>
+  </div>
+<% end %>

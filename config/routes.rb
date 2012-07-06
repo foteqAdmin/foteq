@@ -7,6 +7,14 @@ Foteq::Application.routes.draw do
 
   post "/application/logout"
 
+  get "files/new_image"
+
+  get "files/show_image"
+
+  post "files/create_image"
+
+  delete "files/destroy_image"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

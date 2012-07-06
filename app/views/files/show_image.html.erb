@@ -1,0 +1,22 @@
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        var url = location;
+        url = url.toString().split("?")[1];
+        $("#image").attr("src","/assets/"+url);
+        parent.iframeResponse(document);
+        $("input").click(function()
+        {
+            var src = $("#image").attr("src");
+            src = src.split("/")[src.split("/").length - 1];
+            $("#image_src").attr("value",src);
+            parent.iframeDeletion();
+        });
+    })
+</script>
+<%= form_tag "/files/destroy_image", :method => "delete" do %>
+  <%= hidden_field_tag :image_src %>
+  <img id='image' width="80" height="50" src="" />
+  <br>
+  <input type="submit" value="Alterar" />
+<% end %>

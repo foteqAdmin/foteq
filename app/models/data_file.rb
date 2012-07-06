@@ -1,14 +1,14 @@
+#encoding:UTF-8
 class DataFile < ActiveRecord::Base
   def self.savePic(url)
-    #only images little than 4MB
-    if File.new(url.tempfile,'r').size > 4000000
-      return nil
-    end
     filename = File.basename(url.original_filename)
     extension = File.extname(filename).downcase
     #ensures that filename is an image
     if extension != '.png' and extension != '.gif' and extension != '.jpg'
-      return nil
+      return nil, {"error" => "Extensão do arquivo não permitida (permitido apenas *.png, *,gif e *.jpg)."}
+    #only images little than 4MB
+    elsif File.new(url.tempfile,'r').size > 4000000
+      return nil, {"error" => "Tamanho da imagem acima do permitido (limite de 4 MB)."}
     else
       directory = "app/assets/images"
       path = File.join(directory, filename)

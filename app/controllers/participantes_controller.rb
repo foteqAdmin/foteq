@@ -59,15 +59,7 @@ class ParticipantesController < ApplicationController
   end
 
   def create
-    @hash = Participante.new(params[:participante])
-
-    if @hash['foto_url'].present?
-      unless @hash['foto_url'].class == String
-        @hash['foto_url'] = DataFile.savePic(@hash['foto_url'])
-      end
-    end
-
-    @participante = @hash
+    @participante = Participante.new(params[:participante])
 
     if @participante.save
       FoteqMailer.welcome(@participante).deliver
@@ -81,24 +73,7 @@ class ParticipantesController < ApplicationController
   def update
     @participante = Participante.find(params[:id])
 
-    @hash = params[:participante]
-    if @hash['foto_url'].class == String
-      if @hash['foto_url'] != @participante.foto_url
-        if @participante.foto_url != nil and @participante.foto_url != ""
-          DataFile.removePic(@participante.foto_url)
-        end
-        @hash['foto_url'] = DataFile.savePic(@hash['foto_url'])
-      end
-    elsif File.basename(@hash['foto_url'].original_filename) != @participante.foto_url
-      if @participante.foto_url != nil and @participante.foto_url != ""
-        DataFile.removePic(@participante.foto_url)
-      end
-      @hash['foto_url'] = DataFile.savePic(@hash['foto_url'])
-    else
-      @hash['foto_url'] = File.basename(@hash['foto_url'].original_filename)
-    end
-
-    if @participante.update_attributes(@hash)
+    if @participante.update_attributes(params[:participante])
       flash[:success] = ['Participante '+@participante.nome+' foi atualizado com sucesso.']
       redirect_to participantes_path
     else

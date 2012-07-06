@@ -49,13 +49,15 @@
 			<div class="clear"></div>
 		</div>
 
-		<div style="float:right;margin:0 0 5px 10px;">
+		<div style="float:right;margin:0 0 5px 10px;" id="p_img">
 			<% if @participante.foto_url == nil or @participante.foto_url == "" %>
 		    <%= image_tag "default_large.png" %>
 		  <% else %>
 		    <%= image_tag @participante.foto_url %>
-		  <% end %><br/>
-			<button>Alterar foto</button>
+		  <% end %>
+                        <div class="clear"></div>
+                        <br/>
+			<div style="padding-left:20px"><button>Alterar foto</button></div>
 		</div>
 
 		<div id="part_content">

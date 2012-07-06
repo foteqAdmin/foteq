@@ -1,4 +1,14 @@
 <script type="text/javascript">
+	function iframeResponse(doc)
+	{
+		var src = doc.getElementById("image").getAttribute("src");
+		src = src.split("/")[src.split("/").length - 1];
+		document.getElementById("participante_foto_url").setAttribute("value",src);
+	}
+	function iframeDeletion()
+	{
+		document.getElementById("participante_foto_url").setAttribute("value","");
+	}
 	$(document).ready(function()
 	{
 		var maximum = 0;
@@ -59,12 +69,11 @@
 
   <div>
     <%= p.label :foto_url, 'Foto' %>
+    <%= p.hidden_field :foto_url %>
     <% if @participante.foto_url.present? %>
-      <%= image_tag @participante.foto_url, :id => 'partImg', :width => 165, :height => 200 %><br/>
-      <button>Alterar</button><br/>
-      <%= p.hidden_field :foto_url %>
+      <iframe src="/files/show_image?<%= @participante.foto_url %>" style="border:none;height:100px;width:500px;"></iframe>
     <% else %>
-      <%= p.file_field :foto_url %>
+      <iframe src="/files/new_image" style="border:none;height:100px;width:500px;"></iframe>
     <% end %>
   </div>
   <br/>
