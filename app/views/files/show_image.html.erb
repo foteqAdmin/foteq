@@ -16,7 +16,7 @@
 </script>
 <%= form_tag "/files/destroy_image", :method => "delete" do %>
   <%= hidden_field_tag :image_src %>
-  <img id='image' width="80" height="50" src="" />
+  <img id='image' width="120" height="80" src="" style="margin-left:200px"/>
   <br>
-  <input type="submit" value="Alterar" />
+  <input type="submit" value="Descartar" style="margin-left:215px" />
 <% end %>

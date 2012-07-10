@@ -15,6 +15,8 @@ Foteq::Application.routes.draw do
 
   delete "files/destroy_image"
 
+  put "files/update_image"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

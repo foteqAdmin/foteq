@@ -62,6 +62,7 @@ form input
 }
 #part_content
 {
+	margin:20px 0 0 0;
 	padding:20px 5px 5px 5px;
 	text-align:justify;
 }
@@ -69,3 +70,38 @@ form input
 {
 	display:none;
 }
+/*modal dialog box ... */
+#boxes
+{
+	position:absolute;
+	top:0;
+	left:0;
+}
+#mask
+{
+	position:absolute;
+	z-index:9000;
+	background-color:#000;
+	display:none;
+}
+#boxes .window
+{
+	position:absolute;
+	width:440px;
+	height:200px;
+	display:none;
+	z-index:9999;
+	padding:0 0 0 10px;
+}
+#boxes #dialog
+{
+	width:500px;
+	height:180px;
+	background-color:white;
+}
+.close
+{
+	display:block;
+	text-align:right;
+}
+/* ... end*/

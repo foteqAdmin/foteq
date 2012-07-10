@@ -71,9 +71,9 @@
     <%= p.label :foto_url, 'Foto' %>
     <%= p.hidden_field :foto_url %>
     <% if @participante.foto_url.present? %>
-      <iframe src="/files/show_image?<%= @participante.foto_url %>" style="border:none;height:100px;width:500px;"></iframe>
+      <iframe src="/files/show_image?<%= @participante.foto_url %>" style="border:none;height:120px;width:500px;"></iframe>
     <% else %>
-      <iframe src="/files/new_image" style="border:none;height:100px;width:500px;"></iframe>
+      <iframe src="/files/new_image" style="border:none;height:120px;width:500px;"></iframe>
     <% end %>
   </div>
   <br/>

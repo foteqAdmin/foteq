@@ -1,4 +1,14 @@
 <script>
+  function iframeResponse(doc)
+	{
+		var src = doc.getElementById("image").getAttribute("src");
+		src = src.split("/")[src.split("/").length - 1];
+		document.getElementById("participante_foto_url").setAttribute("value",src);
+	}
+	function iframeDeletion()
+	{
+		document.getElementById("participante_foto_url").setAttribute("value","");
+	}
   $(document).ready(function()
   {
     $("#n2").css("background-color","white");
@@ -6,12 +16,18 @@
     $("#n2").css("border-top-right-radius","10px");
     $("#n2").css("color","black");
     $("title").text($("title").text() +" - Participantes");
+    //start
+    $("#l1").css("background-color","rgb(200,200,200)");
+    $("#projetos").css("display","block");
+    //change each li part_menu#ul
 		$("#l1").click(function()
 		{
 			$("#projetos").css("display","block");
 			$("#publicacoes").css("display","none");
 			$("#atividades").css("display","none");
 			$("#configuracoes").css("display","none");
+      $("#part_menu").children().css("background-color","");
+      $(this).css("background-color","rgb(200,200,200)");
 		});
 		$("#l2").click(function()
 		{
@@ -19,6 +35,8 @@
 			$("#publicacoes").css("display","block");
 			$("#atividades").css("display","none");
 			$("#configuracoes").css("display","none");
+      $("#part_menu").children().css("background-color","");
+      $(this).css("background-color","rgb(200,200,200)");
 		});
 		$("#l3").click(function()
 		{
@@ -26,6 +44,8 @@
 			$("#publicacoes").css("display","none");
 			$("#atividades").css("display","block");
 			$("#configuracoes").css("display","none");
+      $("#part_menu").children().css("background-color","");
+      $(this).css("background-color","rgb(200,200,200)");
 		});
 		$("#l4").click(function()
 		{
@@ -33,9 +53,85 @@
 			$("#publicacoes").css("display","none");
 			$("#atividades").css("display","none");
 			$("#configuracoes").css("display","block");
+      $("#part_menu").children().css("background-color","");
+      $(this).css("background-color","rgb(200,200,200)");
 		});
+
+    //modal dialog box
+    $("button").click(function()
+    {
+      var id = "#dialog"
+      var maskHeight = $(document).height();
+      var maskWidth = $(window).width();
+
+      $('#mask').css({'width':maskWidth,'height':maskHeight});
+
+      $('#mask').fadeTo(200,0.6);
+
+      var winH = $(window).height();
+      var winW = $(window).width();
+
+
+      $(id).css('top',  winH/2-$(id).height()/2);
+      $(id).css('left', winW/2-$(id).width()/2);
+
+      $(id).fadeIn(400);
+    });
+    $('.window .close').click(function (e)
+    {
+      e.preventDefault();
+      $('#mask, .window').hide();
+    });
+    $('.window .change').click(function (e)
+    {
+      e.preventDefault();
+      $('#mask, .window').hide();
+      var src = document.getElementById('participante_foto_url').getAttribute('value');
+      if (src == "" || src == undefined)
+        return;
+      else
+      {
+        var form = $('form[name=ajax_form]');
+        $("#p_img img").attr("src","/assets/loading.gif");
+        $("#p_img button").hide();
+        //pass image value via AJAX
+        $.ajax(
+        {
+          url:form.attr("action"),
+          type:form.attr("method"),
+          data:form.serialize(),
+          dataType:"html",
+          complete: function(jqXHR, textStatus)
+          {
+            $("#p_img img").attr("src","/assets/"+src);
+            $("#p_img button").show();
+          },
+          error: function(jqXHR, textStatus, errorThrown)
+          {
+            alert("ERROR: "+errorThrown);
+          }
+        });
+      }
+    });
   })
 </script>
+
+<form action="/files/update_image" method="put" name="ajax_form">
+  <input type="hidden" name="id" value="<%= @participante.id %>" />
+  <input type="hidden" id="participante_foto_url" value="<%= @participante_foto_url %>" name="foto_url" />
+</form>
+
+<div id="boxes">
+  <div id="dialog" class="window">
+    <%= image_tag "close.png", :size => '22x22', :style => "float:right;cursor:pointer", :class => "close", :title => "Fechar" %>
+    <div class="clear"></div>
+    <iframe src="/files/new_image" style="border:none;height:120px;width:500px;"></iframe>
+    <button class="change"> Alterar foto </button>
+  </div>
+
+  <div id="mask"></div>
+</div>
+
 <% if session['login_name'] == @participante.login %>
 	<div>
 		<div id="part_menu_parent">
@@ -55,22 +151,28 @@
 		  <% else %>
 		    <%= image_tag @participante.foto_url %>
 		  <% end %>
-                        <div class="clear"></div>
-                        <br/>
-			<div style="padding-left:20px"><button>Alterar foto</button></div>
+      <div class="clear"></div>
+      <br/>
+			<div style="padding-left:30px">
+        <button>Alterar foto</button>
+      </div>
 		</div>
 
 		<div id="part_content">
 			<div id="projetos">
 				<% if @psq.present? %>
-					<%= puts 'hehe' %>
+					<% @psq.each do |p| %>
+                                          <%= link_to p.nome, p %><br/>
+                                        <% end %>
 				<% else %>
 					<%= @participante.nome+' não faz parte de nenhum projeto de pesquisa.' %>
 				<% end %>
 			</div>
 			<div id="publicacoes">
 				<% if @pubs.present? %>
-					<%= puts 'hehe' %>
+					<% @pubs.each do |p| %>
+                                          <%= link_to p.titulo, '/publicacoes/'+p.id.to_s %><br/>
+                                        <% end %>
 				<% else %>
 					<%= @participante.nome+' não tem nenhuma publicação.' %>
 				<% end %>

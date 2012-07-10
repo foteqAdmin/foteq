@@ -24,5 +24,22 @@ class FilesController < ApplicationController
     @image = params[:image_src]
     DataFile.removePic(@image)
     render 'new_image'
-  end 
+  end
+
+  def update_image
+    @participante = Participante.find(params[:id])
+    @image = params[:foto_url]
+    if @participante.foto_url.present?
+      DataFile.removePic(@participante.foto_url)
+    end
+    @participante.foto_url = @image    
+
+    if @participante.save
+      flash.now[:success] = ['Sua foto foi atualizada com sucesso']
+    else
+      flash.now[:error] = ['Houve algum erro, tente novamente mais tarde']
+    end
+
+    render 'new_image'
+  end
 end

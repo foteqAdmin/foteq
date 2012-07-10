@@ -2,6 +2,7 @@
 
 class ParticipantesController < ApplicationController
   def index
+    @osvaldo = Participante.find(1)
     @participante = Participante.all
     @participante = @participante.sort_by {|p|[p.nome.downcase]}
   end
@@ -14,7 +15,7 @@ class ParticipantesController < ApplicationController
 			@pubs = Array.new
 			@publicacoes = Publicacao.all
 			@publicacoes.each do |p|
-				p.participantes.each do |parts|
+				p.participantes.each_value do |parts|
 					if @participante.nome == parts
 						@pubs.push(p)
 					end
@@ -25,7 +26,7 @@ class ParticipantesController < ApplicationController
 			@psq = Array.new
 			@pesquisas = Pesquisa.all
 			@pesquisas.each do |p|
-				p.participantes.each do |parts|
+				p.participantes.each_value do |parts|
 					if @participante.nome == parts
 						@psq.push(p)
 					end
