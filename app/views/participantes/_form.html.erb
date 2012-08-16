@@ -81,8 +81,18 @@
   <%= p.label :descricao, 'Resumo do Currículo' %>
   <%= p.text_area :descricao, :cols => 70, :rows => 15 %><br/><br/>
 
-  <%= p.label :projeto, 'Projeto de Pesquisa *' %>
-  <%= p.text_field :projeto, :size => 50 %><br/>
+  <% unless @participante.projeto.present? %>
+    <%= p.label :projeto, 'Projeto de Pesquisa *' %>
+    <% options = Array.new %>
+    <% @pesquisas.each do |p| %>
+      <% if p.nome.length > 80 %>
+        <% options.push([p.nome[0..80]+" ... ", p.nome]) %>
+      <% else %>
+        <% options.push([p.nome, p.id]) %>
+      <% end %>
+    <% end %>
+    <%= p.select :projeto, options_for_select(options) %><br/><br/>
+  <% end %>
 
   <%= p.label :email, 'E-mail *' %>
   <%= p.email_field :email, :size => 15 %><br/>

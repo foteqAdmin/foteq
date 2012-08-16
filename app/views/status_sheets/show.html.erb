@@ -1,0 +1,33 @@
+<h3 style="margin-left:416px">Status sheet</h3><br/><br/>
+
+<b>Projeto de Pesquisa</b><br/>
+<%= link_to Pesquisa.find(@status_sheet.projeto_id).nome, Pesquisa.find(@status_sheet.projeto_id), :style => "margin-left:10px;" %>
+
+<br/><br/>
+
+<b>Participante</b><br/>
+<%= link_to Participante.find(@status_sheet.participante_id).nome, Participante.find(@status_sheet.participante_id), :style => "margin-left:10px;" %>
+
+<br/><br/>
+
+<b>Período</b><br/>
+<span style="margin-left:10px">
+  <% ini = @status_sheet.data_ini %>
+  <%= ini.day.to_s+"/"+ini.month.to_s+"/"+ini.year.to_s+" às 00:00 " %>
+  a 
+  <% final = @status_sheet.data_final %>
+  <%= final.day.to_s+"/"+final.month.to_s+"/"+final.year.to_s+" às 23:59 " %>
+</span>
+
+<br/><br/>
+
+<b>Status</b><br/>
+<% if @status_sheet.status.present? %>
+  <%= simple_format @status_sheet.status, :style => "text-indent:10px" %>
+<% else %>
+  <p style="color:red;margin-left:10px;">Não atualizado.</p>
+<% end %>
+
+<div style="text-align:center;clear:both;">
+  <%= link_to "voltar",url_for(:back) %>
+</div>

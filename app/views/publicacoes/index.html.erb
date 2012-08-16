@@ -6,23 +6,43 @@
     $("#n4").css("border-top-right-radius","10px");
     $("#n4").css("color","black");
     $("title").text($("title").text() +" - Publicações");
+    var linkClicked = false;
+    $("#publicacaos_table tr").mouseover(function()
+    {
+      $($(this).children().children()[3]).css("display","");
+    });
+    $("#publicacaos_table tr").mouseout(function()
+    {
+      $($(this).children().children()[3]).css("display","none");
+    });
+    $("#publicacaos_table tr").click(function()
+    {
+      if (!linkClicked)
+      {
+        $($(this).children().children().get()[2]).toggle("slow");
+
+        if ($($(this).children().children()[3]).html() == '<img alt="Lupa_plus" src="/assets/lupa_plus.png" style="margin-right:5px;opacity:0.3;">clique para ver abstract')
+          $($(this).children().children()[3]).html('<img alt="Lupa_minus" src="/assets/lupa_minus.png" style="margin-right:5px;opacity:0.3;">clique para esconder abstract');
+        else
+          $($(this).children().children()[3]).html('<img alt="Lupa_plus" src="/assets/lupa_plus.png" style="margin-right:5px;opacity:0.3;">clique para ver abstract');
+      }
+    });
+    $("#publicacaos_table tr").find("a").click(function()
+    {
+       linkClicked = true;
+       setTimeout(function(){linkClicked = false;},2000)
+    });
   })
 </script>
 
-<table cellspacing="0">
-  <% if session[:permission] == 'admin' %>
-    <tr>
-      <td>
-        <%= link_to image_tag("doc_add.png", :title => "Adicionar publicação"), "/publicacoes/new" %>
-      </td>
-    </tr>
-  <% end %>
+<h4>Periódicos</h4>
 
-  <tr>
-    <th colspan=2>
-      Periódicos
-    </th>
-  </tr>
+<% if session[:permission] == 'admin' %>
+  <%= link_to image_tag("doc_add.png", :title => "Adicionar publicação"), "/publicacoes/new" %>
+<% end %>
+
+
+<table cellspacing="0" id="publicacaos_table">
 
   <% @publicacoes.each do |p| %>
     <% if p.tipo == 'periodicos' %>
@@ -77,11 +97,16 @@
 						<% info = info + ", v. #{p.volume}" if p.volume.present? %>
 						<% info = info + ", p. #{p.pag_ini}-#{p.pag_final}" if p.pag_ini.present? and p.pag_final.present? %>
 
-            <h4><%= raw(parts.join(", ")) %>. <%= link_to p.titulo, '/publicacoes/'+p.id.to_s %><%= ". #{p.suporte}#{info}, #{p.ano}." %></h4>
+            <b><%= raw(parts.join(", ")) %>. <%= link_to p.titulo, '/publicacoes/'+p.id.to_s %><%= ". #{p.suporte}#{info}, #{p.ano}." %>
             <% if session[:permission] == 'admin' %>
               <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),'/publicacoes/'+p.id.to_s+'/edit' %>
               <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), '/publicacoes/'+p.id.to_s, :confirm => 'Are you sure you want to delete '+p.titulo+'?', :method => :delete %>
             <% end %>
+            </b><br/>
+            <div>
+              <b>Abstract:</b><%= simple_format p.abstract %>
+            </div>
+            <span style="font-size:8pt;color:gray;float:right;display:none;"><%= image_tag 'lupa_plus.png', :style => 'margin-right:5px;opacity:0.3;' %>clique para ver abstract</span>
           </td>
 
           <td valign="center">
@@ -95,20 +120,15 @@
   <% end %>
 </table>
 
-<table cellspacing="0">
-  <% if session[:permission] == 'admin' %>
-    <tr>
-      <td>
-        <%= link_to image_tag("doc_add.png", :title => "Adicionar publicação"), "/publicacoes/new" %>
-      </td>
-    </tr>
-  <% end %>
 
-  <tr>
-    <th colspan=2>
-      Anais de Eventos
-    </th>
-  </tr>
+<h4>Anais de Eventos</h4>
+
+<% if session[:permission] == 'admin' %>
+  <%= link_to image_tag("doc_add.png", :title => "Adicionar publicação"), "/publicacoes/new" %>
+<% end %>
+
+
+<table cellspacing="0" id="publicacaos_table">
 
   <% @publicacoes.each do |p| %>
     <% if p.tipo == 'eventos' %>
@@ -144,11 +164,16 @@
               <% parts[j-1] = temp %>
             <% end %>
 
-            <h4><%= raw(parts.join(",")) %><%= link_to p.titulo, '/publicacoes/'+p.id.to_s %></h4>
+            <b><%= raw(parts.join(",")) %><%= link_to p.titulo, '/publicacoes/'+p.id.to_s %>
             <% if session[:permission] == 'admin' %>
               <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),'/publicacoes/'+p.id.to_s+'/edit' %>
               <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), '/publicacoes/'+p.id.to_s, :confirm => 'Are you sure you want to delete '+p.titulo+'?', :method => :delete %>
             <% end %>
+            </b><br/>
+            <div>
+              <b>Abstract:</b><%= simple_format p.abstract %>
+            </div>
+            <span style="font-size:8pt;color:gray;float:right;display:none;"><%= image_tag 'lupa_plus.png', :style => 'margin-right:5px;opacity:0.3;' %>clique para ver abstract</span>
           </td>
 
           <td valign="top">

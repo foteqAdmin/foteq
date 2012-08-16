@@ -6,31 +6,81 @@
     $("#n3").css("border-top-right-radius","10px");
     $("#n3").css("color","black");
     $("title").text($("title").text() +" - Pesquisas");
+    $("td").on('click', '#ajax_status_sheet', function()
+    {
+      $("#ajax_status_sheet_form").show();
+      $("#ajax_status_sheet").parent().hide();
+    });
+    $("#ajax_status_sheet_form").submit(function(e)
+    {
+      e.preventDefault();
+
+      var status_text = $(this).find("textarea").val();
+
+      if (status_text == "" || status_text == undefined)
+      {
+        $(this).find("textarea").css("border","2px solid red");
+        $(this).find("span").show();
+        return false;
+      }
+      else
+      {
+        $(this).find("textarea").css("border","");
+        $(this).find("span").hide();
+      }
+
+      var input = $(this).find("input");
+      var img = $(this).find("img").show();
+
+      input.hide();
+      img.show();
+
+      var div = $(this).parent().find("div");
+      var form = $(this);
+
+      $.ajax(
+      {
+        url:form.attr("action"),
+        type:form.attr("method"),
+        data:form.serialize(),
+        dataType:"html",
+        complete: function(jqXHR, textStatus)
+        {
+          div.html('<b>Status: </b><img alt="Edit-icon" height="16" id="ajax_status_sheet" src="/assets/edit-icon.png" style="cursor:pointer" title="Editar" width="16"><p>'+status_text+'</p>');
+          div.show();
+          input.show();
+          img.hide();
+          form.hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown)
+        {
+          alert("ERROR: "+errorThrown);
+        }
+      });
+    });
   })
 </script>
+<h3><%= @pesquisa.nome %></h3>
+<% if session[:permission] == 'admin' %>
+  <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),edit_pesquisa_path(p) %>
+  <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), p, :confirm => 'Are you sure you want to delete '+@pesquisa.nome+'?', :method => :delete %>
+<% end %>
+
 <table cellspacing="0">
-
-
   <tr>
       <td>
-        <h3><%= @pesquisa.nome %></h3>
-        <% if session[:permission] == 'admin' %>
-          <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),edit_pesquisa_path(p) %>
-          <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), p, :confirm => 'Are you sure you want to delete '+@pesquisa.nome+'?', :method => :delete %>
-        <% end %><br/><br/>
-
         <%= simple_format(@pesquisa.descricao, :style => "text-align:justify") %><br/>
 
-        <% i = 0%>
-        <% @pesquisa.participantes.each do i=i+1%>
+        <% i = 0 %>
+        <% @pesquisa.participantes.each do i=i+1 %>
         <% end %>
 
         <% if i == 0 %>
           <% i = 2 %>
         <% end %>
 
-        <% parts = Array.new%>
-        <% for j in 1..i/2%>
+        <% parts = Array.new %>
+        <% for j in 1..i/2 %>
 
           <% if Participante.find_by_nome(@pesquisa.participantes['nome'+j.to_s]).present? %>
             <% temp =  link_to(Participante.find_by_nome(@pesquisa.participantes['nome'+j.to_s]).nome, Participante.find_by_nome(@pesquisa.participantes['nome'+j.to_s])) %>
@@ -50,11 +100,90 @@
           <% k = 2 %>
         <% end %>
 
-        <% finan = Array.new%>
-        <% for l in 1..k/2%>
-          <% finan[l-1] = @pesquisa.financiadores['nome'+l.to_s]+' - '+@pesquisa.financiadores['tipo'+l.to_s]%>
+        <% finan = Array.new %>
+        <% for l in 1..k/2 %>
+          <% finan[l-1] = @pesquisa.financiadores['nome'+l.to_s]+' - '+@pesquisa.financiadores['tipo'+l.to_s] %>
         <% end %>
-        <strong>Financiadores: </strong><%= finan.join(" / ")+"." %><br/>
+        <strong>Financiadores: </strong><%= finan.join(" / ")+"." %><br/><br/>
+
+        <% allowed = false %>
+        <% if session[:login] %>
+          <% participante_session = Participante.find_by_login(session[:login_name]) %>
+          <% @pesquisa.participantes.each_value do |v| %>
+            <% if v == participante_session.nome %>
+              <% allowed = true %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <% if allowed or session[:permission] == 'admin' %>
+          <strong>Status sheet:</strong><br/><br/>
+          <table>
+            <% for j in 1..i/2 %>
+              <% if Participante.find_by_nome(@pesquisa.participantes["nome"+j.to_s]).nome == "Prof. Dr. Osvaldo Chiavone Filho" %>
+                <% next %>
+              <% else %>
+                <% p = Participante.find_by_nome(@pesquisa.participantes["nome"+j.to_s]) %>
+                <% unless p.status_sheets.last.nil? %>
+                  <tr>
+                    <td><b>Participante: </b><%= p.nome %></td>
+                    <td>
+                      <b>Período: </b>
+                      <% ini = p.status_sheets.last.data_ini %>
+                      <%= ini.day.to_s+"/"+ini.month.to_s+"/"+ini.year.to_s+" às 00:00 " %>
+                       a 
+                      <% final = p.status_sheets.last.data_final %>
+                      <%= final.day.to_s+"/"+final.month.to_s+"/"+final.year.to_s+" às 23:59 " %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <% if !p.status_sheets.last.status.present? %>
+                      <td colspan="2">
+                        <div>
+                          <b>Status: </b>
+                          <span style="color:red">não atualizado.</span>
+                          <% if participante_session.nome == @pesquisa.participantes["nome"+j.to_s] and (Time.now > ini and Time.now < final) %>
+                            <a id="ajax_status_sheet" style="cursor:pointer" >Atualize</a>.
+                          <% end %>
+                        </div>
+                        <form action="/status_sheets/<%= p.status_sheets.last.id %>" method="put" style="display:none" id="ajax_status_sheet_form">
+                          <label><b>Status</b></label><br/>
+                          <textarea name="status" rows="11" cols="80" style="margin:10px 0 0 5px"></textarea><br/>
+                          <span style="color:red;margin-left:5px;font-size:9pt;display:none">ERRO: escreva algum texto para ser atualizado<br/></span>
+                          <br/>
+                          <input type="submit" value="Atualizar">
+                          <%= image_tag "loading.gif", :style => "display:none" %>
+                        </form>
+                      </td>
+                    <% elsif participante_session.nome == @pesquisa.participantes["nome"+j.to_s] %>
+                      <td colspan="2">
+                        <div>
+                          <b>Status: </b>
+                          <%= image_tag("edit-icon.png", :size => "16x16", :title => "Editar", :style => "cursor:pointer", :id => "ajax_status_sheet") %>
+                          <%= simple_format p.status_sheets.last.status %>
+                        </div>
+                        <form action="/status_sheets/<%= p.status_sheets.last.id %>" method="put" style="display:none" id="ajax_status_sheet_form">
+                          <label><b>Status</b></label><br/>
+                          <textarea name="status" rows="11" cols="80" style="margin:10px 0 0 5px"></textarea><br/>
+                          <span style="color:red;margin-left:5px;font-size:9pt;display:none">ERRO: escreva algum texto para ser atualizado<br/></span>
+                          <br/>
+                          <input type="submit" value="Atualizar">
+                          <%= image_tag "loading.gif", :style => "display:none" %>
+                        </form>
+                      </td>
+                    <% else %>
+                      <td colspan="2"><%= simple_format p.status_sheets.last.status %></td>
+                    <% end %>
+                  </tr>
+                <% else %>
+                  <tr>
+                    <td><span style="color:red">Nenhum status sheet.</span></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% end %>
+          </table>
+        <% end %>
       </td>
   </tr>
 </table>

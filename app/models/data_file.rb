@@ -4,8 +4,8 @@ class DataFile < ActiveRecord::Base
     filename = File.basename(url.original_filename)
     extension = File.extname(filename).downcase
     #ensures that filename is an image
-    if extension != '.png' and extension != '.gif' and extension != '.jpg'
-      return nil, {"error" => "Extensão do arquivo não permitida (permitido apenas *.png, *,gif e *.jpg)."}
+    if extension != '.png' and extension != '.gif' and extension != '.jpg' and extension != '.jpeg'
+      return nil, {"error" => "Extensão do arquivo não permitida (permitido apenas *.png, *,gif, *.jpeg e *.jpg)."}
     #only images little than 4MB
     elsif File.new(url.tempfile,'r').size > 4000000
       return nil, {"error" => "Tamanho da imagem acima do permitido (limite de 4 MB)."}
@@ -44,6 +44,7 @@ class DataFile < ActiveRecord::Base
     path = File.join(directory,url)
     if File.open(path)
       File.delete(path)
+      return ""
     end
   end
 end

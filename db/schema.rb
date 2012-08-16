@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120625133750) do
+ActiveRecord::Schema.define(:version => 20120724120208) do
 
   create_table "data_files", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -55,6 +55,16 @@ ActiveRecord::Schema.define(:version => 20120625133750) do
     t.datetime "updated_at",    :null => false
     t.string   "tipo"
     t.text     "abstract"
+  end
+
+  create_table "status_sheets", :force => true do |t|
+    t.integer  "participante_id"
+    t.date     "data_ini"
+    t.date     "data_final"
+    t.text     "status"
+    t.integer  "projeto_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
 end

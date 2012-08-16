@@ -9,3 +9,22 @@ td h4
 {
 	text-align:justify;
 }
+#publicacaos_table td
+{
+	text-align:justify;
+	padding:10px;
+}
+#publicacaos_table tr:hover
+{
+	background-color:rgb(220,220,220);
+}
+#publicacaos_table div
+{
+	background-color:white;
+	padding:10px;
+	font-size:11pt;
+	text-align:justify;
+	margin:10px 0;
+	display:none;
+	border:1px solid gray;
+}

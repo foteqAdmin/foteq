@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'rufus-scheduler'
 
 class ParticipantesController < ApplicationController
   def index
@@ -41,20 +42,23 @@ class ParticipantesController < ApplicationController
 
   def new
     @participante = Participante.new
+    @pesquisas = Pesquisa.all
   end
 
   def edit
     if session[:login]
       if session[:permission] == 'admin'
+        @pesquisas = Pesquisa.all
         @participante = Participante.find(params[:id])
       elsif Participante.find_by_login(session[:login_name]) == Participante.find(params[:id])
+        @pesquisas = Pesquisa.all
         @participante = Participante.find(params[:id])
       else
         flash[:notice] = ["Desculpe, mas você não tem permissão para editar este participante."]
         redirect_to "/participantes"
       end
     else
-      flash[:notice] = ["Desculpe, mas você não tem permissão para editar este participante ou você tem que fazer login para editar."]
+      flash[:notice] = ["Desculpe, mas você não tem permissão para editar este participante", "Ou você tem que fazer login para editá-lo"]
       redirect_to "/participantes"
     end
   end
@@ -62,8 +66,31 @@ class ParticipantesController < ApplicationController
   def create
     @participante = Participante.new(params[:participante])
 
+    @pesquisa = Pesquisa.find(@participante.projeto)
+    @participante.projeto = @pesquisa.nome
+
+    l = @pesquisa.participantes.length/2
+    @pesquisa.participantes.store('nome'+(l+1).to_s,@participante.nome)
+    @pesquisa.participantes.store('tipo'+(l+1).to_s,'Integrante')
+
+    @pesquisa.save
+
     if @participante.save
       FoteqMailer.welcome(@participante).deliver
+
+      SCHEDULER.every '2m' do
+        s = StatusSheet.new
+
+        s.participante_id = @participante.id
+        s.projeto_id = @pesquisa.id
+        s.data_ini = Time.now
+        s.data_final = Time.now + (60*60*24*7) #a week
+
+        if s.save
+          @participante.status_sheet.push(s)
+        end
+      end
+      
       flash[:success] = ['Participante '+@participante.nome+' foi criado com sucesso.']
       redirect_to @participante
     else

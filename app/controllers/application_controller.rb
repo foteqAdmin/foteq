@@ -2,6 +2,13 @@
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_filter :default_session
+
+  def default_session
+    session[:login] ||= false
+    session[:permission] ||= nil
+    session[:login_name] ||= nil
+  end
   
   def login
     if participante = Participante.authenticate(params[:name],params[:pass])

@@ -28,6 +28,8 @@ class Participante < ActiveRecord::Base
     :presence => {:in => true, :message => 'não pode estar em branco'},
     :on => :create
 
+  has_many :status_sheets
+
   attr_accessor :pass_confirmation
   attr_reader :pass
 

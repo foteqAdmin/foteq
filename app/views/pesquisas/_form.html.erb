@@ -154,7 +154,7 @@
 
 <%= form_for(@pesquisa) do |p|%>
   <%= p.label :nome, 'Título *' %>
-  <%= p.text_field :nome %><br/>
+  <%= p.text_field :nome, :size => 70 %><br/>
 
   <%= p.label :descricao, 'Descrição *' %>
   <%= p.text_area :descricao, :cols => 80, :rows => 15 %><br/>

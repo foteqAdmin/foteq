@@ -1,6 +1,14 @@
 Foteq::Application.routes.draw do
   resources :participantes, :home, :publicacoes, :pesquisas
 
+  match "/status_sheets/" => "status_sheets#index", :as => "status_sheets", :via => :get
+
+  match "/status_sheets/" => "status_sheets#create", :via => :post
+
+  match "/status_sheets/:id" => "status_sheets#show", :as => "status_sheet", :via => :get
+
+  match "/status_sheets/:id" => "status_sheets#update", :via => :put
+
   post "/home/contato"
 
   post "/application/login"

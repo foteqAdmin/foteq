@@ -55,7 +55,7 @@ class PublicacoesController < ApplicationController
         @hash['arquivo'] = DataFile.saveFile(@hash['arquivo'])
       end      
     elsif @publicacao.arquivo.present?
-      DataFile.removeFile(@publicacao.arquivo)
+      @hash['arquivo'] = DataFile.removeFile(@publicacao.arquivo)
     end
 
     if @publicacao.update_attributes(@hash)

@@ -1,3 +1,22 @@
 // Place all the styles related to the pesquisas controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#pesquisas_table td
+{
+	text-align:justify;
+	padding:10px;
+}
+#pesquisas_table tr:hover
+{
+	background-color:rgb(220,220,220);
+}
+#pesquisas_table div
+{
+	background-color:white;
+	padding:10px;
+	font-size:11pt;
+	text-align:justify;
+	margin:10px 0;
+	display:none;
+	border:1px solid gray;
+}

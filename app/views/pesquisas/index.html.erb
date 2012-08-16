@@ -6,18 +6,58 @@
     $("#n3").css("border-top-right-radius","10px");
     $("#n3").css("color","black");
     $("title").text($("title").text() +" - Pesquisas");
+    var linkClicked = false;
+    $("#pesquisas_table tr").mouseover(function()
+    {
+      $(this).children().children().last().css("display","");
+    });
+    $("#pesquisas_table tr").mouseout(function()
+    {
+      $(this).children().children().last().css("display","none");
+    });
+    $("#pesquisas_table tr").click(function()
+    {
+      if (!linkClicked)
+      {
+        $($(this).children().children().get()[2]).toggle("slow");
+
+        if ($(this).children().children().last().html() == '<img alt="Lupa_plus" src="/assets/lupa_plus.png" style="margin-right:5px;opacity:0.3;">clique para ver descrição')
+          $(this).children().children().last().html('<img alt="Lupa_minus" src="/assets/lupa_minus.png" style="margin-right:5px;opacity:0.3;">clique para esconder descrição');
+        else
+          $(this).children().children().last().html('<img alt="Lupa_plus" src="/assets/lupa_plus.png" style="margin-right:5px;opacity:0.3;">clique para ver descrição');
+      }
+    });
+    $("#pesquisas_table tr").find("a").click(function()
+    {
+       linkClicked = true;
+    });
   })
 </script>
-<h4>Projetos de Pesquisa: </h4>
+<h4>Projetos de Pesquisa</h4>
 
 <% if session[:permission] == 'admin' %>
   <%= link_to image_tag("doc_add.png", :title => "Adicionar pesquisa"), new_pesquisa_path %>
 <% end %> 
 
-<% @pesquisa.each do |p| %>
-  <h4><%= link_to p.nome, p %></h4>
-  <% if session[:permission] == 'admin' %>
-    <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),edit_pesquisa_path(p) %>
-    <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), p, :confirm => 'Are you sure you want to delete '+p.nome+'?', :method => :delete %>
+<table id="pesquisas_table">
+  <tr>
+    <th></th>
+  </tr>
+  <% @pesquisa.each do |p| %>
+    <tr>
+      <td>
+        <span style="font-size:13pt;font-weight:bold;"><%= link_to p.nome, p %>
+          <% if session[:permission] == 'admin' %>
+            <%= link_to image_tag("edit-icon.png", :size => "16x16", :title => "Editar"),edit_pesquisa_path(p) %>
+            <%= link_to image_tag("trash-icon.png", :size => "16x16", :title => "Deletar"), p, :confirm => 'Are you sure you want to delete '+p.nome+'?', :method => :delete %>
+          <% end %>
+        </span><br/>
+        <div>
+          <b>Descrição: </b> 
+          <%= simple_format p.descricao %>          
+        </div>
+        <span style="font-size:8pt;color:gray;float:right;display:none;"><%= image_tag 'lupa_plus.png', :style => 'margin-right:5px;opacity:0.3;' %>clique para ver descrição</span>
+      </td>
+    </tr>
   <% end %>
-<% end %>
+</table>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  participante_id: 1
+  periodo: 2012-07-24
+  status: MyText
+  projeto_id: 1
+
+two:
+  participante_id: 1
+  periodo: 2012-07-24
+  status: MyText
+  projeto_id: 1
